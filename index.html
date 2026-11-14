@@ -1,4 +1,4 @@
-<!doctype html><html><head>
+<!doctype html><html lang="fr"><head>
 <meta name="robots" content="noindex,nofollow,noarchive"><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <title>Mon français</title>
 <style>/* fonts embedded so the page keeps its letter shapes offline (SIL OFL) */
@@ -497,11 +497,36 @@ button.stars:active{transform:translateY(2px)}
 .stk-pop{position:fixed;inset:0;z-index:12;display:grid;place-items:center;background:rgba(35,48,77,.45);backdrop-filter:blur(3px)}
 .stk-pop .big{width:min(280px,60vw);aspect-ratio:1;border-radius:50%;background:#fff;display:grid;place-items:center;font-size:min(170px,36vw);box-shadow:0 0 0 12px #fff,0 0 0 20px var(--sun),0 20px 50px rgba(0,0,0,.3);animation:stkin .8s cubic-bezier(.2,.9,.3,1.25)}
 @keyframes stkin{from{transform:scale(.2) rotate(-200deg);opacity:0}}
+/* audit fixes (Nov 14) */
+.brand{margin:0}
+.tw{position:relative;display:grid;min-width:0}
+.tw>.tile,.tw>.door{min-width:0}
+.tw .tsay{position:absolute;bottom:-16px;right:14px}
+.tw.dw .tsay{bottom:18px;right:16px;background:rgba(255,255,255,.95);color:var(--ink);box-shadow:0 3px 0 rgba(0,0,0,.2)}
+.tsay:focus-visible{outline:4px solid var(--ink);outline-offset:2px}
+.monster:focus-visible{outline:4px solid var(--sky);outline-offset:6px;border-radius:24px}
+/* iPad: no long-press menus on pictures, no double-tap zoom on controls */
+body{-webkit-touch-callout:none}
+button,[role=button],.bal,.mc,.vc,.ac{touch-action:manipulation}
+button img,.bal img,.mc img{-webkit-user-drag:none}
+.parent{-webkit-user-select:text;user-select:text}
+.pw{min-width:48px;text-align:center}
+.song button{min-height:48px}
+@media (max-width:640px){
+  .tile .ic{flex-wrap:wrap;height:auto;min-height:64px}
+  #dwPens{flex-wrap:wrap}
+  .sortbox .bucket{min-width:0}
+  #commu .bucket b{overflow-wrap:anywhere;font-size:16px}
+}
+/* reduced motion: the shake is gone, so a wrong answer gets a red outline instead */
+@media (prefers-reduced-motion:reduce){
+  .nope,.miss,[style*="shake"]{outline:5px solid #E53935!important;outline-offset:2px}
+}
 </style>
 
 <div class="wrap">
   <header class="top">
-    <div class="brand"><span class="flag"><i style="background:#2B4FA6"></i><i style="background:#fff"></i><i style="background:#E0413A"></i></span>Mon français</div>
+    <h1 class="brand"><span class="flag"><i style="background:#2B4FA6"></i><i style="background:#fff"></i><i style="background:#E0413A"></i></span>Mon français</h1>
     <div class="topr">
       <button class="fs" id="fsBtn" aria-label="Full screen" title="Full screen" hidden><svg class="in" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9V4h5M15 4h5v5M20 15v5h-5M9 20H4v-5"/></svg><svg class="out" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4v5H4M20 9h-5V4M15 20v-5h5M4 15h5v5"/></svg></button>
       <button class="stars" id="starBtn" aria-label="Stickers"><span>⭐</span><span id="starCount">0</span><span class="last" id="lastStk"></span></button>
@@ -510,6 +535,7 @@ button.stars:active{transform:translateY(2px)}
   </header>
   <div id="novoice" class="novoice" hidden>For parents: no French voice was found on this device, but almost every word now has a recording, so this only affects a few words. On a Chromebook, open Settings → Accessibility → Text-to-speech and add a French voice.</div>
 
+  <main>
   <!-- HOME -->
   <section id="home" class="screen">
     <div class="week" id="week" hidden><h2 class="week-h"><span class="new-tag">🆕</span>NOUVEAU</h2><div class="week-grid" id="weekGrid"></div></div>
@@ -1210,12 +1236,18 @@ button.stars:active{transform:translateY(2px)}
       <div class="pool" id="vioPool"></div>
     </div>
   </section>
+  </main>
 </div>
 <div class="party" id="party"></div>
 
 <script>
 (function(){
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+/* Game timers belong to the screen that started them: go() bumps navGen and the pending ones are dropped,
+   so nothing keeps talking after Back. keep() is the plain timer, for clean-up and rewards. */
+let navGen=0; const keep=window.setTimeout.bind(window);
+const setTimeout=(fn,ms)=>{const g=navGen;return keep(()=>{if(g===navGen)fn()},ms)};
+const PEN_NAMES={'#3A86E0':'blue','#F2594B':'red','#E53935':'red','#1F9A6C':'green','#8C66D9':'purple','#FFB020':'yellow','#23304D':'black','#7B4A2B':'brown','#DB4F87':'pink'};
 const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
 const COLORS=["#F2594B","#3A86E0","#1F9A6C","#8C66D9","#DB4F87","#C9621F","#C27A00","#15808F","#D94B8C","#5B6FE0"];
 
@@ -1266,7 +1298,7 @@ function tts(t,opts={}){
   try{
     if(!frVoice) return; // never read French with an English voice
     const u=new SpeechSynthesisUtterance(t); u.voice=frVoice; u.lang=frVoice.lang;
-    u.rate=opts.rate||0.85; if(opts.onend)u.onend=opts.onend; if(opts.onstart)u.onstart=opts.onstart;
+    u.rate=opts.rate||0.85; if(opts.onend){const g=navGen;u.onend=()=>{if(g===navGen)opts.onend()}} if(opts.onstart)u.onstart=opts.onstart;
     speechSynthesis.speak(u);
   }catch(e){}
 }
@@ -1297,10 +1329,10 @@ function win(n=1,big=true){
   if(curScreen!=='home'&&!DONE[curScreen]){DONE[curScreen]=1;try{localStorage.setItem('done',JSON.stringify(DONE))}catch(e){}}
   const had=Math.floor(stars/STK_STEP);
   stars+=n; showStars(); try{localStorage.setItem('stars',stars)}catch(e){}
-  if(Math.floor(stars/STK_STEP)>had) setTimeout(()=>stickerPop(Math.floor(stars/STK_STEP)-1),1400);
+  if(Math.floor(stars/STK_STEP)>had) keep(()=>stickerPop(Math.floor(stars/STK_STEP)-1),1400);
   const p=$('#party'); const em=['⭐','🎉','✨','💛','🌈'];
-  for(let i=0;i<18;i++){const s=document.createElement('span');s.textContent=em[i%em.length];s.style.left=(Math.random()*100)+'vw';s.style.animationDelay=(Math.random()*.4)+'s';p.appendChild(s);setTimeout(()=>s.remove(),2000)}
-  if(big){const b=document.createElement('div');b.className='big-ok';b.textContent='⭐';document.body.appendChild(b);setTimeout(()=>b.remove(),1000)}
+  for(let i=0;i<18;i++){const s=document.createElement('span');s.textContent=em[i%em.length];s.style.left=(Math.random()*100)+'vw';s.style.animationDelay=(Math.random()*.4)+'s';p.appendChild(s);keep(()=>s.remove(),2000)}
+  if(big){const b=document.createElement('div');b.className='big-ok';b.textContent='⭐';document.body.appendChild(b);keep(()=>b.remove(),1000)}
   chime(); setTimeout(()=>say(['Bravo !','Super !'][Math.random()*2|0],{queue:true}),350);
 }
 showStars();
@@ -1312,7 +1344,7 @@ function fsEnter(){const f=FSD.requestFullscreen||FSD.webkitRequestFullscreen; i
 function fsExit(){try{(document.exitFullscreen||document.webkitExitFullscreen).call(document)}catch(e){}}
 function fsPaint(){const on=fsOn(); fsBtn.classList.toggle('on',on); fsBtn.setAttribute('aria-label',on?'Exit full screen':'Full screen'); fsBtn.title=on?'Exit full screen':'Full screen'}
 if(document.fullscreenEnabled||document.webkitFullscreenEnabled){ fsBtn.hidden=false; fsBtn.onclick=()=>{ fsOn()?fsExit():fsEnter().catch(fsTip) }; }
-function fsTip(){const t=$('#fsTip');t.hidden=false;clearTimeout(fsTip.t);fsTip.t=setTimeout(()=>t.hidden=true,6000)}
+function fsTip(){const t=$('#fsTip');t.hidden=false;clearTimeout(fsTip.t);fsTip.t=keep(()=>t.hidden=true,6000)}
 document.addEventListener('fullscreenchange',fsPaint); document.addEventListener('webkitfullscreenchange',fsPaint);
 /* On your child's Chromebook the first tile she taps also switches to full screen (once per visit, so Esc stays out). */
 let fsAuto=/CrOS/.test(navigator.userAgent);
@@ -1325,6 +1357,7 @@ let curId='home';
 const CAT_EXTRA={vocab:'cat-langage',afficheu:'cat-langage',vococt:'cat-langage',affiche:'cat-langage',affichei:'cat-langage',affichee:'cat-langage',afficheo:'cat-langage',sone:'cat-langage'};
 function catOf(id){ if(CAT_EXTRA[id]) return CAT_EXTRA[id];const t=[...document.querySelectorAll('.catscreen [data-go]')].find(b=>b.dataset.go===id&&(!MODE[id]||b.dataset.mode===MODE[id]));return t?t.closest('.catscreen').id:'home'}
 function go(id){
+  navGen++; cntRun++;
   curId=id; curScreen=MODE[id]?id+':'+MODE[id]:id; paintDone();
   $$('.screen').forEach(s=>s.hidden=s.id!==id);
   window.scrollTo(0,0); if(inits[id]) inits[id]();
@@ -1455,7 +1488,7 @@ function paintChips(){ $$('#trPick .chip').forEach(b=>{b.setAttribute('aria-pres
 function selectTr(ch){ trCur=ch; trLock=false; trMoves=0; paintChips(); drawGuide(); speakTr(); }
 function speakTr(){ if(/\d/.test(trCur)) say(NUMS[+trCur-1]); else say(trCur.toLowerCase()); }
 function buildPicker(){ const pk=$('#trPick'); pk.innerHTML=''; TR_SETS[trSet].forEach(ch=>{const b=document.createElement('button');b.className='chip';b.dataset.ch=ch;b.textContent=ch;b.onclick=()=>selectTr(ch);pk.appendChild(b)}); }
-["#3A86E0","#F2594B","#1F9A6C","#8C66D9","#FFB020"].forEach((c,i)=>{const b=document.createElement('button');b.className='pen';b.style.background=c;b.setAttribute('aria-label','crayon');b.setAttribute('aria-pressed',i===0);b.onclick=()=>{pen=c;$$('.pen').forEach(x=>x.setAttribute('aria-pressed',x===b))};$('#pens').appendChild(b)});
+["#3A86E0","#F2594B","#1F9A6C","#8C66D9","#FFB020"].forEach((c,i)=>{const b=document.createElement('button');b.className='pen';b.style.background=c;b.setAttribute('aria-label',(PEN_NAMES[c.toUpperCase()]||'')+' crayon');b.setAttribute('aria-pressed',i===0);b.onclick=()=>{pen=c;$$('.pen').forEach(x=>x.setAttribute('aria-pressed',x===b))};$('#pens').appendChild(b)});
 $('#trClear').onclick=()=>{ix.clearRect(0,0,S,S);trProgress(0);drawHints()};
 $('#trSay').onclick=speakTr;
 inits.trace=()=>{ const set=/\d/.test(trCur)?'nombres':'lettres'; if(set!==trSet||!$('#trPick').children.length){trSet=set;trDone.clear();buildPicker()}
@@ -1559,7 +1592,7 @@ function memStart(n,set){
   const pick=shuffle(mSet==='oct'||mSet==='nov'?(mSet==='oct'?VOC_OCT:VOC_NOV).map(([w,src])=>[w,`<img alt="" src="${src}">`]):MEM).slice(0,mSize); mLeft=pick.length;
   const cards=shuffle([...pick.map(v=>({v,k:'p'})),...pick.map(v=>({v,k:'w'}))]);
   const g=$('#mgrid'); g.innerHTML=''; const cols=Math.ceil(Math.sqrt(cards.length)); g.style.setProperty('--cols',cols); g.style.setProperty('--rows',Math.ceil(cards.length/cols));
-  cards.forEach(c=>{const b=document.createElement('button');b.className='mc';b.textContent='?';b.setAttribute('aria-label','card');
+  cards.forEach((c,ci)=>{const b=document.createElement('button');b.className='mc';b.textContent='?';b.setAttribute('aria-label','card '+(ci+1));
     b.onclick=()=>memFlip(b,c);g.appendChild(b)});
 }
 function memFace(b,c){b.classList.add('up');b.innerHTML=c.k==='p'?`<span class="pic">${c.v[1]}</span>`:`<span class="lab">${c.v[0]}</span>`}
@@ -2002,7 +2035,7 @@ function dwSeg(a,b){dwX.strokeStyle=dwPen;dwX.lineWidth=dwPen==='#fff'?40:14;dwX
 dwC.addEventListener('pointerdown',e=>{dwDrawing=true;dwLast=dwPos(e);dwC.setPointerCapture(e.pointerId);dwSeg(dwLast,dwLast)});
 dwC.addEventListener('pointermove',e=>{if(!dwDrawing)return;const p=dwPos(e);dwSeg(dwLast,p);dwLast=p});
 ['pointerup','pointercancel'].forEach(t=>dwC.addEventListener(t,()=>dwDrawing=false));
-["#23304D","#E53935","#3A86E0","#1F9A6C","#FFB020","#8C66D9","#7B4A2B","#DB4F87"].forEach((c,i)=>{const b=document.createElement('button');b.className='pen';b.style.background=c;b.setAttribute('aria-label','crayon');b.setAttribute('aria-pressed',i===0);b.onclick=()=>{dwPen=c;$$('#dwPens .pen').forEach(x=>x.setAttribute('aria-pressed',x===b))};$('#dwPens').appendChild(b)});
+["#23304D","#E53935","#3A86E0","#1F9A6C","#FFB020","#8C66D9","#7B4A2B","#DB4F87"].forEach((c,i)=>{const b=document.createElement('button');b.className='pen';b.style.background=c;b.setAttribute('aria-label',(PEN_NAMES[c.toUpperCase()]||'')+' crayon');b.setAttribute('aria-pressed',i===0);b.onclick=()=>{dwPen=c;$$('#dwPens .pen').forEach(x=>x.setAttribute('aria-pressed',x===b))};$('#dwPens').appendChild(b)});
 function dwClear(){dwX.fillStyle='#fff';dwX.fillRect(0,0,600,600);dwInked=false}
 function dwSheet(){const s=$('#dwSheet');s.innerHTML='';DW.forEach(([w],i)=>{const c=document.createElement('button');c.className='dcell'+(i===dwI?' now':'');
   c.innerHTML=(DWS[w]?`<img alt="" src="${DWS[w]}">`:'')+`<span class="lab">${w}</span>`;c.onclick=()=>dwOpen(i);s.appendChild(c)})}
@@ -2438,14 +2471,19 @@ $('#starBtn').onclick=()=>{ stopAll(); go('album'); };
 function stickerPop(i){
   const e=STICKERS[i%STICKERS.length], o=document.createElement('div'); o.className='stk-pop'; o.innerHTML=`<div class="big">${e}</div>`;
   const close=()=>{ o.remove(); if(curId==='album') albumPaint(i%STICKERS.length); };
-  o.onclick=close; document.body.appendChild(o); chime(); setTimeout(()=>{ if(o.isConnected) close() },3500);
+  o.onclick=close; document.body.appendChild(o); chime(); keep(()=>{ if(o.isConnected) close() },3500);
 }
 /* a speaker on every door and tile says its name (only where a checked clip exists) */
 $$('.tile,.door').forEach(t=>{ const b=t.querySelector('b'); if(!b) return; const name=b.textContent.trim();
   if(!(gkey(name)||hasTeacher(name))) return;
-  const sp=document.createElement('span'); sp.className='tsay'; sp.setAttribute('role','button'); sp.setAttribute('aria-label','Listen'); sp.textContent='🔊';
-  sp.onclick=e=>{ e.stopPropagation(); e.preventDefault(); say(name); sp.classList.remove('on'); void sp.offsetWidth; sp.classList.add('on'); };
-  t.appendChild(sp) });
+  const sp=document.createElement('button'); sp.className='tsay'; sp.setAttribute('aria-label','Listen: '+name); sp.lang='fr'; sp.textContent='🔊';
+  sp.onclick=()=>{ say(name); sp.classList.remove('on'); void sp.offsetWidth; sp.classList.add('on'); };
+  const w=document.createElement('div'); w.className='tw'+(t.classList.contains('door')?' dw':''); t.replaceWith(w); w.append(t,sp) });
+/* English text for the parent is marked as English (the page is French) */
+$$('.parent,.hint,#novoice,.fstip,.mw-steps,.mw-sum,.tricount').forEach(e=>e.lang='en');
+/* the monster also works with a keyboard or switch */
+mwMon.setAttribute('role','button'); mwMon.tabIndex=0;
+mwMon.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); mwMon.click() } });
 /* start */
 paintDone();
 const h=(location.hash||'').slice(1); go(inits[h]||h==='sons'||/^cat-/.test(h)?h:'home');
