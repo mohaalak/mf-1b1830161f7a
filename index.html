@@ -522,11 +522,99 @@ button img,.bal img,.mc img{-webkit-user-drag:none}
 @media (prefers-reduced-motion:reduce){
   .nope,.miss,[style*="shake"]{outline:5px solid #E53935!important;outline-offset:2px}
 }
+/* delight (Nov 14): the little world. Containers never take taps; only the creatures do. */
+@media (min-width:641px){header.top{overflow-x:clip}} /* a bird flying off never widens the page */
+.perch{position:relative;flex:1;align-self:stretch;min-width:0;min-height:56px;margin:0 4px;pointer-events:none}
+.perch.empty{visibility:hidden}
+body:not(.world) .perch{display:none}
+.wire{position:absolute;left:0;right:0;bottom:2px;width:100%;height:24px;overflow:visible;
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 9%,#000 91%,transparent);mask-image:linear-gradient(90deg,transparent,#000 9%,#000 91%,transparent)}
+.wire path{fill:none;stroke:#CDB896;stroke-width:2.5px;stroke-linecap:round}
+.bird,.uni,.peek{pointer-events:auto;padding:0;line-height:1;touch-action:manipulation;-webkit-user-select:none;user-select:none}
+.bird{position:absolute;width:48px;height:52px;margin-left:-24px;display:grid;place-items:end center;font-size:var(--fz,32px);z-index:1}
+.bird .b{display:block;transform-origin:50% 100%;animation:var(--idle,hop) var(--p,7s) ease-in-out var(--d,0s) infinite}
+.bird .f{display:block;transform:scaleX(var(--face,1))}
+.bird .w{display:block;transform-origin:50% 70%}
+@keyframes hop{0%,86%,100%{transform:none}89%{transform:translateY(-9px)}92%{transform:none}95%{transform:translateY(-6px)}98%{transform:none}}
+@keyframes preen{0%,80%,100%{transform:none}84%,90%{transform:rotate(-14deg)}87%{transform:rotate(-6deg)}94%{transform:rotate(6deg)}}
+@keyframes peck{0%,88%,100%{transform:none}91%,96%{transform:rotate(22deg) translateY(2px)}93.5%{transform:rotate(10deg)}}
+.bird.fly .b{animation:flyoff 2.4s cubic-bezier(.45,0,.2,1);pointer-events:none}
+.bird.fly .w,.visitor.go .w,.pa-bird .w{animation:flap .16s ease-in-out infinite alternate}
+@keyframes flyoff{0%{transform:none}8%{transform:translateY(4px) scale(1.05,.9)}
+  35%{transform:translate(calc(var(--dir,1)*140px),-120px) rotate(calc(var(--dir,1)*-12deg));opacity:1}
+  42%,58%{transform:translate(calc(var(--dir,1)*170px),-150px);opacity:0}
+  62%{transform:translate(calc(var(--dir,1)*-150px),-130px);opacity:0}
+  90%{transform:translate(0,-6px);opacity:1}100%{transform:none}}
+@keyframes flap{to{transform:scaleY(.72) translateY(-2px)}}
+.bird.arrive .b{animation:arrive 1.6s cubic-bezier(.2,.8,.3,1) backwards}
+@keyframes arrive{0%{transform:translate(160px,-140px);opacity:0}20%{opacity:1}80%{transform:translateY(-8px)}100%{transform:none}}
+.note{position:absolute;left:50%;top:-6px;font-size:20px;color:#8C66D9;font-weight:700;pointer-events:none;animation:note 1s ease-out forwards}
+.note+.note{color:#D81B72;margin-left:10px}
+@keyframes note{from{transform:translate(-50%,6px);opacity:0}25%{opacity:1}to{transform:translate(-20%,-30px);opacity:0}}
+.visitor{position:absolute;inset:-4px 0 0;overflow:hidden}
+.visitor .vt{position:absolute;inset:0;transform:translateX(-12%)}
+.visitor.go .vt{animation:cross 7s linear}
+.visitor .vb{position:absolute;left:-40px;top:2px;font-size:22px;opacity:.9}
+.visitor.go .vb{animation:glide 1.6s ease-in-out infinite alternate}
+.visitor .w{display:block;transform-origin:50% 60%}
+@keyframes cross{from{transform:translateX(-12%)}to{transform:translateX(112%)}}
+@keyframes glide{to{translate:0 8px}}
+/* the unicorn's hill: the empty spot after the doors */
+.meadow{position:relative;min-height:150px;pointer-events:none}
+.meadow .hill{position:absolute;z-index:1;left:4%;right:4%;bottom:8px;height:46%;border-radius:50% 50% 46% 46%/100% 100% 22% 22%;
+  background:radial-gradient(ellipse 70% 120% at 50% 0,#DAF1CB,#BCE3A9 62%,#A6D592);box-shadow:0 10px 16px -8px rgba(60,120,50,.4)}
+.meadow .fl{position:absolute;z-index:2;bottom:calc(8px + 26%);font-size:26px;line-height:1}
+.meadow .f1{left:16%;bottom:calc(8px + 18%)}.meadow .f2{left:28%;font-size:22px;bottom:calc(8px + 30%)}.meadow .f3{right:14%;font-size:22px;bottom:calc(8px + 16%)}
+.uni{position:absolute;left:50%;bottom:calc(8px + 38%);width:96px;height:96px;margin-left:-48px;display:grid;place-items:end center;font-size:78px;border-radius:24px}
+.uni .u,.peek .u{display:block;transform-origin:50% 100%}
+.uni .u{animation:graze 6.5s ease-in-out infinite}
+.uni .ug,.peek .ug{display:block;transform:scaleX(var(--face,1))}
+@keyframes graze{0%,100%{transform:none}40%{transform:translateY(-3px)}
+  62%{transform:none}70%,80%{transform:rotate(-14deg) translateY(4px)}74%{transform:rotate(-10deg) translateY(4px)}88%{transform:none}}
+.uni.prance .u{animation:prance 1.5s cubic-bezier(.3,.7,.4,1)}
+@keyframes prance{0%{transform:none}12%{transform:translate(-14px,-30px) rotate(10deg)}24%{transform:translate(-26px,0)}
+  38%{transform:translate(-6px,-38px) rotate(-8deg)}52%{transform:translate(18px,0)}66%{transform:translate(30px,-26px) rotate(-12deg)}
+  80%{transform:translate(12px,0)}90%{transform:translateY(-8px)}100%{transform:none}}
+.spark{position:absolute;font-size:var(--sz,24px);line-height:1;pointer-events:none;animation:spark 1s ease-out var(--sd,0s) backwards}
+@keyframes spark{from{transform:scale(.2) rotate(-40deg);opacity:0}30%{transform:scale(1.15);opacity:1}to{transform:translateY(-34px) scale(.6) rotate(30deg);opacity:0}}
+/* album: the unicorn peeks over the sticker panel */
+.alb{position:relative}
+.peek{position:absolute;right:26px;top:-56px;width:84px;height:56px;overflow:hidden;font-size:62px;display:grid;place-items:end center;border-radius:20px 20px 0 0}
+.peek .u{translate:0 52%;animation:peekup 7s ease-in-out 1s infinite}
+@keyframes peekup{0%,58%,100%{transform:none}66%,90%{transform:translateY(-34%) rotate(-4deg)}78%{transform:translateY(-36%) rotate(5deg)}}
+.peek.up .u{animation:peekhi 1.4s cubic-bezier(.3,.7,.4,1)}
+@keyframes peekhi{0%{transform:none}30%,70%{transform:translateY(-48%)}45%{transform:translateY(-40%) rotate(8deg)}55%{transform:translateY(-48%) rotate(-8deg)}100%{transform:none}}
+.uni:focus-visible,.peek:focus-visible,.bird:focus-visible{outline:4px solid var(--sky);outline-offset:2px}
+/* win(): unicorn and rainbow across the bottom, birds fly up. Never takes a tap. */
+.parade{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:9}
+.parade>*{position:absolute;pointer-events:none}
+.pa-bow{left:0;bottom:46px;width:100vw;height:30px;border-radius:15px;transform-origin:0 50%;
+  background:linear-gradient(#F2594B 0 17%,#FFB020 17% 33%,#FFD84D 33% 50%,#5CC28A 50% 67%,#4F9BEA 67% 83%,#9A7BE0 83%);
+  animation:bow 2.6s linear forwards;opacity:.92}
+@keyframes bow{0%{transform:scaleX(0)}72%{transform:scaleX(1);opacity:.92}100%{transform:scaleX(1);opacity:0}}
+.pa-uni{left:0;bottom:22px;font-size:88px;line-height:1;animation:gallop 2.6s linear forwards}
+.pa-uni .u{display:block;animation:bob .32s ease-in-out infinite alternate}
+.pa-uni .ug{display:block;transform:scaleX(var(--face,1))}
+@keyframes gallop{0%{transform:translateX(-110px)}72%{transform:translateX(calc(100vw - 50px))}100%{transform:translateX(calc(100vw + 20px))}}
+@keyframes bob{from{transform:translateY(0) rotate(-4deg)}to{transform:translateY(-16px) rotate(4deg)}}
+.pa-bird{bottom:-50px;font-size:38px;line-height:1;animation:rise2 1.8s cubic-bezier(.3,.1,.6,1) var(--sd,0s) both}
+.pa-bird .f{display:block;transform:scaleX(var(--face,1))}
+.pa-bird .w{display:block}
+@keyframes rise2{from{transform:none;opacity:1}85%{opacity:1}to{transform:translate(var(--dx,120px),-75vh) rotate(var(--rz,-10deg));opacity:0}}
+.pa-still{right:18px;bottom:18px;font-size:72px;line-height:1;background:#fff;border-radius:50%;width:110px;height:110px;display:grid;place-items:center;box-shadow:0 6px 18px rgba(35,48,77,.18)}
+@media (max-width:640px){
+  .perch{display:none}
+  .meadow{min-height:130px}
+  .uni{font-size:64px;width:84px;height:84px;margin-left:-42px}
+  .pa-uni{font-size:64px}
+  .pa-bow{height:22px;bottom:34px}
+}
 </style>
 
 <div class="wrap">
   <header class="top">
     <h1 class="brand"><span class="flag"><i style="background:#2B4FA6"></i><i style="background:#fff"></i><i style="background:#E0413A"></i></span>Mon français</h1>
+<div class="perch" id="perch"><svg class="wire" viewBox="0 0 100 24" preserveAspectRatio="none" aria-hidden="true"><path d="M0 4Q50 20 100 4" vector-effect="non-scaling-stroke"/></svg><div class="visitor" aria-hidden="true"><div class="vt"><span class="vb"><span class="w">🕊️</span></span></div></div></div>
     <div class="topr">
       <button class="fs" id="fsBtn" aria-label="Full screen" title="Full screen" hidden><svg class="in" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9V4h5M15 4h5v5M20 15v5h-5M9 20H4v-5"/></svg><svg class="out" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4v5H4M20 9h-5V4M15 20v-5h5M4 15h5v5"/></svg></button>
       <button class="stars" id="starBtn" aria-label="Stickers"><span>⭐</span><span id="starCount">0</span><span class="last" id="lastStk"></span></button>
@@ -545,6 +633,7 @@ button img,.bal img,.mc img{-webkit-user-drag:none}
       <button class="door" style="--dc:#DB4F87;--dd:#A93767" data-go="cat-chansons"><span class="dart">🎵🍦🚲</span><b>Les chansons</b><span class="hint">Colours, Violette, Tout ce que je veux</span></button>
       <button class="door" style="--dc:#15808F;--dd:#0E5F6B" data-go="cat-sciences"><span class="dart">☀️🌧️❄️</span><b>Les sciences</b><span class="hint">Le temps: what is the weather?</span></button>
       <button class="door" style="--dc:#23824A;--dd:#185F37" data-go="cat-etudes"><span class="dart">🏘️👨‍👩‍👧</span><b>Les études sociales</b><span class="hint">My family, my community</span></button>
+      <div class="meadow" id="meadow"><span class="hill" aria-hidden="true"></span><span class="fl f1" aria-hidden="true">🌷</span><span class="fl f2" aria-hidden="true">🌼</span><span class="fl f3" aria-hidden="true">🌷</span><button class="uni" id="uni" aria-label="Unicorn"><span class="u"><span class="ug">🦄</span></span></button></div>
       </div>
     <div class="parent">
       <h3>For Mom &amp; Dad</h3>
@@ -1222,7 +1311,7 @@ button img,.bal img,.mc img{-webkit-user-drag:none}
   <!-- VIOLETTE -->
   <section id="album" class="screen" hidden>
     <div class="bar"><button class="back" data-home aria-label="Back">←</button><h2 class="alb-h">⭐ <span id="albStars">0</span></h2></div>
-    <div class="panel alb">
+    <div class="panel alb"><button class="peek" id="peek" aria-label="Unicorn"><span class="u"><span class="ug">🦄</span></span></button>
       <div class="alb-next" id="albNext" aria-hidden="true"></div>
       <div class="alb-grid" id="albGrid"></div>
       <p class="hint" style="text-align:center;margin:14px 0 0">Every 5 stars ⭐ = a new sticker for the album.</p>
@@ -1334,6 +1423,7 @@ function win(n=1,big=true){
   for(let i=0;i<18;i++){const s=document.createElement('span');s.textContent=em[i%em.length];s.style.left=(Math.random()*100)+'vw';s.style.animationDelay=(Math.random()*.4)+'s';p.appendChild(s);keep(()=>s.remove(),2000)}
   if(big){const b=document.createElement('div');b.className='big-ok';b.textContent='⭐';document.body.appendChild(b);keep(()=>b.remove(),1000)}
   chime(); setTimeout(()=>say(['Bravo !','Super !'][Math.random()*2|0],{queue:true}),350);
+  parade();
 }
 showStars();
 
@@ -1359,7 +1449,7 @@ function catOf(id){ if(CAT_EXTRA[id]) return CAT_EXTRA[id];const t=[...document.
 function go(id){
   navGen++; cntRun++;
   curId=id; curScreen=MODE[id]?id+':'+MODE[id]:id; paintDone();
-  $$('.screen').forEach(s=>s.hidden=s.id!==id);
+  $$('.screen').forEach(s=>s.hidden=s.id!==id); world(id);
   window.scrollTo(0,0); if(inits[id]) inits[id]();
   try{history.replaceState(null,'',id==='home'?location.pathname:'#'+id)}catch(e){}
 }
@@ -2484,6 +2574,79 @@ $$('.parent,.hint,#novoice,.fstip,.mw-steps,.mw-sum,.tricount').forEach(e=>e.lan
 /* the monster also works with a keyboard or switch */
 mwMon.setAttribute('role','button'); mwMon.tabIndex=0;
 mwMon.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); mwMon.click() } });
+/* ---------- the little world: birds, a unicorn (sounds only, no words) ---------- */
+const RM=matchMedia('(prefers-reduced-motion: reduce)');
+const WORLD=id=>id==='home'||id==='album'||/^cat-/.test(id);
+/* The emoji all face left (Apple and Noto alike), so flip them to go right. */
+const UNI_R=false, BIRD_R=false, DOVE_R=false;
+function tone(seq,type,vol){try{actx=actx||new (window.AudioContext||window.webkitAudioContext)();if(actx.state==='suspended')actx.resume();const t0=actx.currentTime;
+  seq.forEach(([f1,f2,at,dur])=>{const o=actx.createOscillator(),g=actx.createGain();o.type=type;o.frequency.setValueAtTime(f1,t0+at);o.frequency.exponentialRampToValueAtTime(f2,t0+at+dur);
+    g.gain.setValueAtTime(0.0001,t0+at);g.gain.exponentialRampToValueAtTime(vol,t0+at+.012);g.gain.exponentialRampToValueAtTime(0.0001,t0+at+dur);
+    o.connect(g).connect(actx.destination);o.start(t0+at);o.stop(t0+at+dur+.02)})}catch(e){}}
+const chirp=()=>{const b=2600+Math.random()*900;tone([[b,b*1.35,0,.07],[b*1.1,b*1.5,.1,.08],[b*1.25,b*.95,.22,.11]],'sine',.12)};
+const sparkleSound=()=>tone([523,659,784,1047,1319,1568].map((f,i)=>[f,f*1.02,i*.07,.5]),'sine',.09);
+/* one more bird every 3 stickers: 2 to 5 */
+const BIRDS=[['🐦','hop',7,0,32],['🐤','peck',8.5,2.5,28],['🦜','preen',9,5,34],['🐦','preen',7.8,1.2,28],['🐥','hop',10,4,26]];
+let birdsShown=-1;
+function perchPaint(){
+  const p=$('#perch'); if(!p||!document.body.classList.contains('world')) return;
+  const want=Math.min(BIRDS.length,2+Math.floor(stkN()/3)), w=p.clientWidth, fit=Math.max(0,Math.floor((w-24)/56)), n=Math.min(want,fit);
+  if(n===birdsShown&&p.dataset.w==String(w)) return; p.dataset.w=w;
+  let seen=0; try{seen=+localStorage.getItem('birds')||0}catch(e){}
+  p.querySelectorAll('.bird').forEach(b=>b.remove());
+  const POS=[.2,.62,.41,.82,.06];
+  [...Array(n)].forEach((_,i)=>{const [e,idle,per,del,fz]=BIRDS[i];
+    const x=.08+POS[i]*.84; /* stand on the wire where it hangs (svg path: y = 4 + 32x(1-x), 24 px box, 2 px from the bottom) */
+    const b=document.createElement('button'); b.className='bird'; b.type='button'; b.setAttribute('aria-label','Bird');
+    b.style.left=(x*100)+'%'; b.style.bottom=(19-32*x*(1-x))+'px';
+    const face=(i%2?-1:1)*(BIRD_R?1:-1);
+    b.style.cssText+=`;--fz:${fz}px;--idle:${idle};--p:${per}s;--d:${del}s;--face:${face};--dir:${i%2?-1:1}`;
+    b.innerHTML=`<span class="b"><span class="f"><span class="w">${e}</span></span></span>`;
+    if(i>=Math.max(2,seen)&&!RM.matches){b.classList.add('arrive');b.querySelector('.b').addEventListener('animationend',()=>b.classList.remove('arrive'),{once:true})}
+    b.onclick=()=>birdTap(b); p.appendChild(b)});
+  if(n>seen){try{localStorage.setItem('birds',n)}catch(e){}}
+  birdsShown=n; p.classList.toggle('empty',!n);
+}
+function birdTap(b){
+  chirp();
+  ['♪','♫'].forEach((t,i)=>{const s=document.createElement('span');s.className='note';s.textContent=t;s.setAttribute('aria-hidden','true');s.style.animationDelay=(i*.15)+'s';b.appendChild(s);keep(()=>s.remove(),1300)});
+  if(RM.matches||b.classList.contains('fly')) return;
+  b.classList.add('fly'); keep(()=>b.classList.remove('fly'),2500);
+}
+function sparkles(el,n){ /* little ✨ around a creature, in its parent (the creature itself may clip) */
+  const host=el.parentNode, hr=host.getBoundingClientRect(), r=el.getBoundingClientRect();
+  for(let i=0;i<n;i++){const s=document.createElement('span');s.className='spark';s.textContent=i%3===2?'⭐':'✨';s.setAttribute('aria-hidden','true');
+    s.style.left=(r.left-hr.left+r.width*(Math.random()*1.4-.2))+'px';s.style.top=(r.top-hr.top+r.height*(Math.random()*.9-.35))+'px';
+    s.style.setProperty('--sz',(16+Math.random()*14|0)+'px');s.style.setProperty('--sd',(i*.08)+'s');host.appendChild(s);keep(()=>s.remove(),RM.matches?1400:1100+i*80)}
+}
+const uni=$('#uni'), peek=$('#peek');
+uni.style.setProperty('--face',UNI_R?1:-1); peek.style.setProperty('--face',UNI_R?-1:1);
+uni.onclick=()=>{ sparkleSound(); sparkles(uni,7);
+  if(RM.matches||uni.classList.contains('prance')) return; uni.classList.add('prance'); keep(()=>uni.classList.remove('prance'),1550) };
+peek.onclick=()=>{ sparkleSound(); sparkles(peek,5);
+  if(RM.matches||peek.classList.contains('up')) return; peek.classList.add('up'); keep(()=>peek.classList.remove('up'),1450) };
+/* the dove that crosses the header flies forwards */
+$('.visitor .vb').style.transform='scaleX('+(DOVE_R?1:-1)+')';
+/* now and then (every 30-50 s, only while the world is on screen) a dove flies across the header */
+const vis=$('.visitor');
+vis.addEventListener('animationend',()=>vis.classList.remove('go'));
+(function visit(){ if(!RM.matches&&!document.hidden&&document.body.classList.contains('world')&&$('#perch').clientWidth) vis.classList.add('go');
+  keep(visit,30000+Math.random()*20000) })();
+/* shown only on home, the doors and the album; hidden (and so still) during games */
+function world(id){ document.body.classList.toggle('world',WORLD(id)); vis.classList.remove('go'); if(WORLD(id)) requestAnimationFrame(perchPaint); }
+let rzq=0; addEventListener('resize',()=>{ if(rzq) return; rzq=requestAnimationFrame(()=>{rzq=0;perchPaint()}) });
+/* win(): the unicorn gallops by on a rainbow (at most every 20 s), birds fly up */
+let lastParade=-1e9;
+function parade(){
+  let pa=$('#parade'); if(!pa){pa=document.createElement('div');pa.className='parade';pa.id='parade';pa.setAttribute('aria-hidden','true');document.body.appendChild(pa)}
+  const now=Date.now(), full=now-lastParade>20000; if(full) lastParade=now;
+  const add=(cls,html,ms,style)=>{const e=document.createElement('div');e.className=cls;e.innerHTML=html;if(style)e.style.cssText=style;pa.appendChild(e);keep(()=>e.remove(),ms);return e};
+  if(RM.matches){ if(full) add('pa-still','<span>🦄</span>',1600); return }
+  if(full){ add('pa-bow','',2700); add('pa-uni',`<span class="u"><span class="ug" style="--face:${UNI_R?1:-1}">🦄</span></span>`,2700) }
+  [['🐦',8,1,140],['🐤',84,-1,-150],['🐦',70,-1,-90]].slice(0,full?3:2).forEach(([e,x,dir,dx],i)=>
+    add('pa-bird',`<span class="f"><span class="w">${e}</span></span>`,2400+i*250,
+      `left:${x}%;--sd:${.25+i*.22}s;--dx:${dx}px;--rz:${dir*-10}deg;--face:${dir*(BIRD_R?1:-1)}`));
+}
 /* start */
 paintDone();
 const h=(location.hash||'').slice(1); go(inits[h]||h==='sons'||/^cat-/.test(h)?h:'home');
