@@ -1,0 +1,25 @@
+# Each file pushed to notify/ becomes an issue. The issue is created by github-actions[bot],
+# so the repo owner gets an email (GitHub doesn't email you about your own issues).
+# First line of the file = title, the rest = body.
+name: notify
+on:
+  push:
+    branches: [main]
+    paths: ['notify/**']
+permissions:
+  issues: write
+  contents: read
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 2 }
+      - env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git diff --name-only --diff-filter=A HEAD~1 HEAD -- notify/ | while read -r f; do
+            title=$(head -n1 "$f")
+            tail -n +2 "$f" > /tmp/body.md
+            gh issue create --repo "$GITHUB_REPOSITORY" --title "$title" --body-file /tmp/body.md
+          done
