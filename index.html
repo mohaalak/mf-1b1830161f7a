@@ -559,7 +559,6 @@ button img,.bal img,.mc img{-webkit-user-drag:none}
 .pw{min-width:48px;text-align:center}
 .song button{min-height:48px}
 @media (max-width:640px){
-  .tile .ic{flex-wrap:wrap;height:auto;min-height:64px}
   #dwPens{flex-wrap:wrap}
   .sortbox .bucket{min-width:0}
   #commu .bucket b{overflow-wrap:anywhere;font-size:16px}
@@ -799,6 +798,14 @@ body:not(.world) .perch{display:none}
   .rn-hear{width:60px;height:60px;font-size:26px;left:16px;bottom:30px}
 }
 @media (prefers-reduced-motion:reduce){.rn-btn.hint::after{transform:translateY(-50%) rotate(90deg)}}
+/* distill (Nov 16): tiles are 3 across on the iPad and laptop (2 at most on a phone), and the picture row
+   sits on one line and shrinks with the tile, so it never wraps into the title */
+.grid{grid-template-columns:repeat(auto-fill,minmax(240px,1fr))}
+.tile{container-type:inline-size}
+.tile .ic{white-space:nowrap;flex-wrap:nowrap;height:auto;min-height:64px;font-size:min(54px,calc(66cqi / var(--n,3)))}
+.week-grid .tile .ic{font-size:min(60px,calc(66cqi / var(--n,3)))}
+/* the tile's English hint stops before its 🔊 speaker instead of running under it */
+.tw>.tile .hint{padding-right:38px}
 </style>
 
 <!-- Pixel animals: Angais/pixel-art-atlas-1.4m (Hugging Face), CC0 1.0 public domain. -->
@@ -829,16 +836,16 @@ body:not(.world) .perch{display:none}
       </div>
     <div class="parent">
       <h3>For Mom &amp; Dad</h3>
-      Everything here comes from the teacher's Google Classroom (September to November), including her posters. 🎙️ means the teacher's own recording (sounds a, i, e &amp; u, Turlututu, Mon chat, Les couleurs, Violette). 🔊 is a generated French voice for the words she didn't record: until October Grok (standard French), since November an ElevenLabs Québécois voice, each clip checked by a speech-to-text test. 🎵 plays her song. A star ⭐ is earned for each finished activity.
+      Everything here comes from the teacher's Google Classroom (September to November), including her posters. 🎙️ is her own voice (sounds a, i, e &amp; u, Turlututu, Mon chat, Les couleurs, Violette). 🔊 is a generated French voice for words she didn't record: Grok (standard French) until October, an ElevenLabs Québécois voice since November, each clip checked by speech-to-text. 🎵 plays her song. Each finished activity earns a star ⭐.
       <ul>
         <li><b>New Nov 16 (🆕):</b>
           <ul>
-            <li>❄️🌷☀️🍂 <b>Les 4 saisons</b> (Les sciences): the 4 seasons and their months from the teacher's flip book. 🔊👀 look &amp; listen, 🔎 "Où est…?", 🧺 sort the pictures (clothes, children, things to do) into the right season, and 🧺 <b>Les mois</b>: put each month in its season, like the flip book. Games: 👾 <b>Le monstre des saisons</b> and 🎈 <b>Pop les saisons</b> (a seasons level and a months level).</li>
-            <li>🐿️ <b>Les saisons et les animaux</b> (Les sciences): her slides about what animals do in each season (babies are born, squirrels look for nuts, bears hibernate…). Each sentence is read aloud; then a sort game.</li>
-            <li>🟦 <b>Les formes 2D</b> (Les mathématiques): her 10 shapes (carré, rectangle, losange, triangle, trapèze, cercle, ovale, pentagone, étoile, coeur): look &amp; listen, then "Où est…?". Games: 👾 <b>Le monstre des formes</b> and 🎈 <b>Pop les formes</b>.</li>
-            <li>📐 <b>Coin et côté</b> (Les mathématiques): her two posters ("Ceci est un coin", "Ceci est un côté") and a game: does the arrow point to a corner (un coin) or a side (un côté)?</li>
-            <li>📺 <b>Les vidéos</b> (new door on the home screen): all 13 YouTube videos the teacher posted (sounds, numbers, songs, weather, family), grouped by her Classroom topics, newest first. Tap a picture to play it inside the page; the big ← closes it. The older "Class videos" links below open the same player.</li>
-            <li>🖨️ Worth printing: her «Les saisons flip book» (4 pages: cut, glue, then draw what you wear and what you can do in each season). It is in the class files folder.</li>
+            <li>❄️🌷☀️🍂 <b>Les 4 saisons</b> (Les sciences): the seasons and their months from her flip book. Look &amp; listen, "Où est…?", sort the pictures (clothes, children, things to do) by season, and 🧺 <b>Les mois</b>: put each month in its season. Games: 👾 <b>Le monstre des saisons</b>, 🎈 <b>Pop les saisons</b> (a seasons level and a months level).</li>
+            <li>🐿️ <b>Les saisons et les animaux</b> (Les sciences): her slides on what animals do in each season (babies are born, squirrels look for nuts, bears hibernate…), read aloud, then a sort game.</li>
+            <li>🟦 <b>Les formes 2D</b> (Les mathématiques): her 10 shapes (carré, rectangle, losange, triangle, trapèze, cercle, ovale, pentagone, étoile, coeur): look &amp; listen, then "Où est…?". Games: 👾 <b>Le monstre des formes</b>, 🎈 <b>Pop les formes</b>.</li>
+            <li>📐 <b>Coin et côté</b> (Les mathématiques): her two posters ("Ceci est un coin", "Ceci est un côté"), then a game: does the arrow point to a corner or a side?</li>
+            <li>📺 <b>Les vidéos</b> (new door): all 13 YouTube videos she posted (sounds, numbers, songs, weather, family) by Classroom topic, newest first. Tap a picture to play it here; the big ← closes it. The video links under "Earlier updates" open the same player.</li>
+            <li>🖨️ Worth printing: «Les saisons flip book» in the class files folder (4 pages: cut, glue, then draw what you wear and what you can do in each season).</li>
           </ul></li>
       </ul>
       <details class="older"><summary>Earlier updates (September – mid-November)</summary>
@@ -888,9 +895,9 @@ body:not(.world) .perch{display:none}
     <div class="grid">
       <button class="tile" style="--c:#8C66D9" data-go="runner" aria-label="Unicorn run"><span class="ic">🦄💨🫧</span><b>🦄 🌈</b><span class="hint">Run, listen, jump or slide to the right bubble</span></button>
       <button class="tile" style="--c:#E53935" data-go="lettres"><span class="ic">🐞🦒🐒</span><b>Les types de lettres</b><span class="hint">Ladybug, giraffe or monkey letter?</span></button>
-      <button class="tile" style="--c:#C9621F" data-go="voyelleo"><span class="ic">🖍️🤖🌹</span><b>La voyelle o</b><span class="hint">Homework Oct 7: draw a picture for each word</span></button>
-      <button class="tile" style="--c:#C9433A" data-go="coq"><span class="ic">🐓📖</span><b>Olivier Coq</b><span class="hint">Homework Oct 7: find the "o" sound in the story</span></button>
-      <button class="tile" style="--c:#1F9A6C" data-go="tri"><span class="ic">🧺<span class="big" style="font-size:38px;color:#F2594B">a</span><span class="big" style="font-size:38px;color:#1F9A6C">e</span><span class="big" style="font-size:38px;color:#3A86E0">i</span></span><b>Le tri des sons</b><span class="hint">Homework Sept 30: is it a, e or i?</span></button>
+      <button class="tile" style="--c:#C9621F" data-go="voyelleo"><span class="ic">🖍️🤖🌹</span><b>La voyelle o</b><span class="hint">Homework: draw a picture for each word</span></button>
+      <button class="tile" style="--c:#C9433A" data-go="coq"><span class="ic">🐓📖</span><b>Olivier Coq</b><span class="hint">Homework: find the "o" sound in the story</span></button>
+      <button class="tile" style="--c:#1F9A6C" data-go="tri"><span class="ic">🧺<span class="big" style="font-size:38px;color:#F2594B">a</span><span class="big" style="font-size:38px;color:#1F9A6C">e</span><span class="big" style="font-size:38px;color:#3A86E0">i</span></span><b>Le tri des sons</b><span class="hint">Homework: is it a, e or i?</span></button>
       <button class="tile" style="--c:#8C66D9" data-go="monstre" data-mode="mots" data-done="monstre:mots"><span class="ic">👾✉️</span><b>Les mots monstres</b><span class="hint">Read the big word, feed it to the monster!</span></button>
       <button class="tile" style="--c:#F2594B" data-go="pop" data-mode="sons" data-done="pop:sons"><span class="ic">🎈<span class="big" style="font-size:36px;color:#F2594B">a</span><span class="big" style="font-size:36px;color:#3A86E0">i</span><span class="big" style="font-size:36px;color:#1F9A6C">e</span><span class="big" style="font-size:36px;color:#C9621F">o</span><span class="big" style="font-size:36px;color:#0B8C8C">u</span></span><b>Pop les sons</b><span class="hint">Hear a word, pop its balloon</span></button>
       <button class="tile" style="--c:#5B6FE0" data-go="memoire"><span class="ic">🃏🍁</span><b>Jeu de mémoire</b><span class="hint">Find the pairs: school, October and November words</span></button>
@@ -900,8 +907,8 @@ body:not(.world) .perch{display:none}
     </div>
     <h3 class="cat-h">📖 J'apprends</h3>
     <div class="grid">
-      <button class="tile" style="--c:var(--sky)" data-go="sons"><span class="ic"><span class="big" style="color:var(--tomato)">a</span><span class="big">i</span><span class="big" style="color:var(--leaf)">e</span><span class="big" style="color:#C9621F">o</span><span class="big" style="color:#0B8C8C">u</span></span><b>Les sons</b><span class="hint">New: r, é, l and m! Listen &amp; sort words by sound</span></button>
-      <button class="tile" style="--c:#1E6FD0" data-go="sonr"><span class="ic">🦈🧚🦙</span><b>Les sons r · é · l · m</b><span class="hint">the teacher's new sound words: look, find, tap the letter</span></button>
+      <button class="tile" style="--c:var(--sky)" data-go="sons"><span class="ic"><span class="big" style="color:var(--tomato)">a</span><span class="big">i</span><span class="big" style="color:var(--leaf)">e</span><span class="big" style="color:#C9621F">o</span><span class="big" style="color:#0B8C8C">u</span></span><b>Les sons</b><span class="hint">Listen &amp; sort words by sound</span></button>
+      <button class="tile" style="--c:#1E6FD0" data-go="sonr"><span class="ic">🦈🧚🦙</span><b>Les sons r · é · l · m</b><span class="hint">the teacher's sound words: look, find, tap the letter</span></button>
       <button class="tile" style="--c:var(--tomato)" data-go="trace" data-tr="a"><span class="ic"><span class="big">Aa</span>✏️</span><b>J'écris les lettres</b><span class="hint">Trace a, i, e, o, u</span></button>
       <button class="tile" style="--c:var(--leaf)" data-go="vocnov"><span class="ic">🍁✋👂</span><b>Vocabulaire</b><span class="hint">November words: the body and action words (and the older ones)</span></button>
       <button class="tile" style="--c:var(--sun)" data-go="chat"><span class="ic">🐱</span><b>Mon chat</b><span class="hint">Read the poem, find the "a"</span></button>
@@ -909,8 +916,8 @@ body:not(.world) .perch{display:none}
       <button class="tile" style="--c:#7D8AA6" data-go="souris"><span class="ic">🐭🍚</span><b>La souris</b><span class="hint">Poem: find the "i" words, feed the mouse</span></button>
       <button class="tile" style="--c:#0B8C8C" data-go="turlu"><span class="ic">🐢🚀</span><b>Turlututu</b><span class="hint">Poem: find the "u" sound, feed the turtle</span></button>
       <button class="tile" style="--c:#C9621F" data-go="jojo"><span class="ic">🤕🩹</span><b>Petit Jojo</b><span class="hint">Poem: find the "o" sound, help Jojo</span></button>
-      <button class="tile" style="--c:#0B8C8C" data-go="lucie"><span class="ic">🐢🎶</span><b>Lucie Tortue</b><span class="hint">Homework Oct 14: put the words in order</span></button>
-      <button class="tile" style="--c:#7D8AA6" data-go="emilie"><span class="ic">🐘🎒</span><b>Émilie Éléphant</b><span class="hint">Homework Nov 4: find the words with é</span></button>
+      <button class="tile" style="--c:#0B8C8C" data-go="lucie"><span class="ic">🐢🎶</span><b>Lucie Tortue</b><span class="hint">Homework: put the words in order</span></button>
+      <button class="tile" style="--c:#7D8AA6" data-go="emilie"><span class="ic">🐘🎒</span><b>Émilie Éléphant</b><span class="hint">Homework: find the words with é</span></button>
     </div>
   </section>
 
@@ -918,14 +925,14 @@ body:not(.world) .perch{display:none}
     <div class="bar"><button class="back" data-home aria-label="Back">←</button><h2 style="color:#6B4DB0">➗ Les mathématiques</h2></div>
     <h3 class="cat-h">🎮 Les jeux</h3>
     <div class="grid">
-      <button class="tile" style="--c:#23824A" data-go="croco"><span class="ic">🐊<span class="big" style="font-size:40px;color:#23824A">&gt;</span></span><b>Les crocodiles</b><span class="hint">Homework Oct 7: the crocodile eats the bigger number</span></button>
-      <button class="tile" style="--c:#E53935" data-go="pommes"><span class="ic">🍎🐛</span><b>Les pommes</b><span class="hint">Homework Oct 7: before, after, between (up to 56)</span></button>
+      <button class="tile" style="--c:#23824A" data-go="croco"><span class="ic">🐊<span class="big" style="font-size:40px;color:#23824A">&gt;</span></span><b>Les crocodiles</b><span class="hint">Homework: the crocodile eats the bigger number</span></button>
+      <button class="tile" style="--c:#E53935" data-go="pommes"><span class="ic">🍎🐛</span><b>Les pommes</b><span class="hint">Homework: before, after, between (up to 56)</span></button>
       <button class="tile" style="--c:#15808F" data-go="monstre" data-mode="nombres" data-done="monstre:nombres"><span class="ic">👾<span class="big" style="font-size:40px">7</span></span><b>Le monstre des nombres</b><span class="hint">Say the number, feed it to the monster!</span></button>
       <button class="tile" style="--c:#8C66D9" data-go="pop" data-mode="nombres" data-done="pop:nombres"><span class="ic">🎈<span class="big" style="font-size:40px">12</span></span><b>Pop les nombres</b><span class="hint">Hear a number, pop its balloon</span></button>
       <button class="tile" style="--c:#15808F" data-go="points"><span class="ic"><span class="big" style="font-size:40px">1·2·3</span></span><b>Relie les points</b><span class="hint">Connect the dots 1 to 10</span></button>
       <button class="tile" style="--c:#8E44AD" data-go="prepos"><span class="ic">🐁📦</span><b>Où est la souris ?</b><span class="hint">on, under, in, in front, behind, beside, between</span></button>
-      <button class="tile" style="--c:#1F9A6C" data-go="formes"><span class="ic">🔺🟦⬟</span><b>Les côtés</b><span class="hint">Homework Nov 4: sort the shapes by their sides</span></button>
-      <button class="tile" style="--c:#C9621F" data-go="enordre"><span class="ic">🎃<span class="big" style="font-size:36px">11·12</span></span><b>En ordre !</b><span class="hint">Homework Oct 14: the pumpkins from small to big</span></button>
+      <button class="tile" style="--c:#1F9A6C" data-go="formes"><span class="ic">🔺🟦⬟</span><b>Les côtés</b><span class="hint">Homework: sort the shapes by their sides</span></button>
+      <button class="tile" style="--c:#C9621F" data-go="enordre"><span class="ic">🎃<span class="big" style="font-size:36px">11·12</span></span><b>En ordre !</b><span class="hint">Homework: the pumpkins from small to big</span></button>
       <button class="tile new" data-new="1" style="--c:#8C66D9" data-go="monstre" data-mode="formes" data-done="monstre:formes"><span class="new-tag">🆕 NOUVEAU</span><span class="ic">👾🔺⭐</span><b>Le monstre des formes</b><span class="hint">Say the shape, feed it to the monster!</span></button>
       <button class="tile new" data-new="1" style="--c:#DB4F87" data-go="pop" data-mode="formes" data-done="pop:formes"><span class="new-tag">🆕 NOUVEAU</span><span class="ic">🎈🟦❤️</span><b>Pop les formes</b><span class="hint">Hear a shape, pop its balloon</span></button>
       <button class="tile new" data-new="1" style="--c:#B0009B" data-go="coincote"><span class="new-tag">🆕 NOUVEAU</span><span class="ic">📐➡️</span><b>Coin et côté</b><span class="hint">the teacher's posters: is it a corner or a side?</span></button>
@@ -939,7 +946,7 @@ body:not(.world) .perch{display:none}
   </section>
 
   <section id="cat-chansons" class="screen catscreen" hidden>
-    <div class="bar"><button class="back" data-home aria-label="Back">←</button><h2 style="color:#D0578C">🎤 Les chansons</h2></div>
+    <div class="bar"><button class="back" data-home aria-label="Back">←</button><h2 style="color:#A93767">🎤 Les chansons</h2></div>
     <h3 class="cat-h">🎮 Les jeux</h3>
     <div class="grid">
       <button class="tile" style="--c:#DB4F87" data-go="pop" data-mode="couleurs" data-done="pop:couleurs"><span class="ic">🎈🎈🎈</span><b>Pop les couleurs</b><span class="hint">Hear a colour, pop that balloon</span></button>
@@ -954,7 +961,7 @@ body:not(.world) .perch{display:none}
   </section>
 
   <section id="cat-sciences" class="screen catscreen" hidden>
-    <div class="bar"><button class="back" data-home aria-label="Back">←</button><h2 style="color:#168093">🔬 Les sciences</h2></div>
+    <div class="bar"><button class="back" data-home aria-label="Back">←</button><h2 style="color:#0E5F6B">🔬 Les sciences</h2></div>
     <h3 class="cat-h">🎮 Les jeux</h3>
     <div class="grid">
       <button class="tile" style="--c:#15808F" data-go="pop" data-mode="temps" data-done="pop:temps"><span class="ic">🎈🌧️</span><b>Pop le temps</b><span class="hint">Hear the weather, pop its balloon</span></button>
@@ -971,14 +978,14 @@ body:not(.world) .perch{display:none}
   </section>
 
   <section id="cat-etudes" class="screen catscreen" hidden>
-    <div class="bar"><button class="back" data-home aria-label="Back">←</button><h2 style="color:#22784A">🏘️ Les études sociales</h2></div>
+    <div class="bar"><button class="back" data-home aria-label="Back">←</button><h2 style="color:#185F37">🏘️ Les études sociales</h2></div>
     <h3 class="cat-h">🎮 Les jeux</h3>
     <div class="grid">
       <button class="tile" style="--c:#1E6FD0" data-go="commu"><span class="ic">🧑‍🚒🏠🚲</span><b>Dans une communauté</b><span class="hint">People, places or things? Sort the teacher's board</span></button>
     </div>
     <h3 class="cat-h">📖 J'apprends</h3>
     <div class="grid">
-      <button class="tile" style="--c:#23824A" data-go="famille"><span class="ic">👨‍👩‍👧‍👦</span><b>Ma famille</b><span class="hint">Voici maman, papa… + homework Oct 28</span></button>
+      <button class="tile" style="--c:#23824A" data-go="famille"><span class="ic">👨‍👩‍👧‍👦</span><b>Ma famille</b><span class="hint">Voici maman, papa… + homework</span></button>
     </div>
   </section>
 
@@ -1528,37 +1535,33 @@ body:not(.world) .perch{display:none}
   <!-- LES 4 SAISONS (Les sciences, Nov 16) -->
   <section id="saisons" class="screen" hidden>
     <div class="bar"><button class="back" data-home aria-label="Back">←</button><h2>Les 4 saisons</h2><button class="speak" id="saSay" aria-label="Listen">🔊</button></div>
-    <div class="vsw"><button data-go="saisons" aria-pressed="true">❄️🌷☀️🍂 Les 4 saisons</button><button data-go="saisanim" aria-pressed="false">🐿️ Les saisons et les animaux</button></div>
     <div class="tabs"><button class="tab" data-sam="look" aria-pressed="true">🔊 👀</button><button class="tab" data-sam="find" aria-pressed="false">🔎 Où est…?</button><button class="tab" data-sam="pics" aria-pressed="false">🧺 🧤👕</button><button class="tab" data-sam="mois" aria-pressed="false">🧺 Les mois</button></div>
     <div class="panel" id="saPanel"></div>
-    <p class="hint" style="margin:12px 0 0">the teacher's flip book «Les 4 saisons» and her slides «Les vêtements des saisons», with her pictures. 🔊 👀: tap a season or a month to hear it. 🔎: hear a season, tap its picture. 🧺 🧤👕: which season goes with the picture? 🧺 Les mois: put each month in its season. 🔊 is a generated voice (she didn't record these).</p>
+    <p class="hint" style="margin:12px 0 0">the teacher's flip book «Les 4 saisons» and slides «Les vêtements des saisons», with her pictures. 🔊 👀 tap to hear · 🔎 hear a season, tap its picture · 🧺 🧤👕 which season goes with the picture? · 🧺 Les mois: put each month in its season. 🔊 generated voice.</p>
   </section>
 
   <!-- LES SAISONS ET LES ANIMAUX (Les sciences, Nov 16) -->
   <section id="saisanim" class="screen" hidden>
     <div class="bar"><button class="back" data-home aria-label="Back">←</button><h2>Les saisons et les animaux</h2><button class="speak" id="anSay" aria-label="Listen">🔊</button></div>
-    <div class="vsw"><button data-go="saisons" aria-pressed="false">❄️🌷☀️🍂 Les 4 saisons</button><button data-go="saisanim" aria-pressed="true">🐿️ Les saisons et les animaux</button></div>
     <div class="tabs"><button class="tab" data-anm="look" aria-pressed="true">🔊 👀</button><button class="tab" data-anm="sort" aria-pressed="false">🧺 ❄️🌷☀️🍂</button></div>
     <div class="panel" id="anPanel"></div>
-    <p class="hint" style="margin:12px 0 0">the teacher's slides «Les saisons et les animaux»: her sentences and photos. Tap a photo to hear its sentence. 🧺: hear the sentence, look at the photo, then tap its season. 🔊 is a generated voice.</p>
+    <p class="hint" style="margin:12px 0 0">the teacher's slides «Les saisons et les animaux». Tap a photo to hear its sentence. 🧺 hear the sentence, then tap its season. 🔊 generated voice.</p>
   </section>
 
   <!-- LES FORMES 2D (maths, Nov 9; file opened Nov 16) -->
   <section id="formes2d" class="screen" hidden>
     <div class="bar"><button class="back" data-home aria-label="Back">←</button><h2>Les formes 2D</h2><button class="speak" id="f2Say" aria-label="Listen" hidden>🔊</button></div>
-    <div class="vsw"><button data-go="formes2d" aria-pressed="true">🟦 Les formes 2D</button><button data-go="coincote" aria-pressed="false">📐 Coin et côté</button><button data-go="formes" aria-pressed="false">🔺 Les côtés</button></div>
-    <div class="tabs"><button class="tab" data-f2m="look" aria-pressed="true">🔊 👀</button><button class="tab" data-f2m="find" aria-pressed="false">🔎 Où est…?</button><button class="tab" data-go="monstre" data-mode="formes" style="border-color:#8C66D9">👾 Le monstre</button></div>
+    <div class="tabs"><button class="tab" data-f2m="look" aria-pressed="true">🔊 👀</button><button class="tab" data-f2m="find" aria-pressed="false">🔎 Où est…?</button></div>
     <div class="agrid" id="f2Grid"></div>
-    <p class="hint" style="margin:12px 0 0">the teacher's slide «Les formes 2D»: her 10 shapes in her colours. Tap a shape to hear its name. 🔎: hear a shape, tap it. 🔊 is a generated voice.</p>
+    <p class="hint" style="margin:12px 0 0">the teacher's slide «Les formes 2D», her 10 shapes in her colours. Tap a shape to hear it · 🔎 hear a shape, tap it. 🔊 generated voice.</p>
   </section>
 
   <!-- COIN ET CÔTÉ (maths, Nov 9; file opened Nov 16) -->
   <section id="coincote" class="screen" hidden>
     <div class="bar"><button class="back" data-home aria-label="Back">←</button><h2>Coin et côté</h2></div>
-    <div class="vsw"><button data-go="formes2d" aria-pressed="false">🟦 Les formes 2D</button><button data-go="coincote" aria-pressed="true">📐 Coin et côté</button><button data-go="formes" aria-pressed="false">🔺 Les côtés</button></div>
     <div class="tabs"><button class="tab" data-ccm="look" aria-pressed="true">🔊 👀</button><button class="tab" data-ccm="game" aria-pressed="false">🎮 ➡️ 📐</button></div>
     <div class="panel" id="ccPanel"></div>
-    <p class="hint" style="margin:12px 0 0">the teacher's posters «Ceci est un coin» and «Ceci est un côté». Game: look where the pink arrow points. At a corner? Tap "un coin". At a side (the blue line)? Tap "un côté". 🔊 is a generated voice.</p>
+    <p class="hint" style="margin:12px 0 0">the teacher's posters «Ceci est un coin» and «Ceci est un côté». Game: the pink arrow points at a corner (tap "un coin") or at a side, the blue line (tap "un côté"). 🔊 generated voice.</p>
   </section>
 
   <!-- VIOLETTE -->
@@ -3034,6 +3037,8 @@ document.addEventListener('click',e=>{
   e.preventDefault(); vidOpen(v,a);
 });
 
+/* a picture row of 4+ emoji gets --n so it shrinks to fit on one line (see the distill CSS) */
+try{ const sg=new Intl.Segmenter(); $$('.tile .ic').forEach(i=>{ if(i.children.length) return; const n=[...sg.segment(i.textContent.trim())].length; if(n>3) i.style.setProperty('--n',n) }) }catch(e){}
 /* this week's row on home: every tile with a 🆕 tag, monster and balloons first (max 6).
    It follows the data-new / new-tag markers, so a new batch shows up here by itself. */
 (function(){
