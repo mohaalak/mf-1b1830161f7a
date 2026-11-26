@@ -868,6 +868,30 @@ body:not(.world) .perch{display:none}
 .spw{font-family:var(--fk);font-weight:700;font-size:38px;padding:2px 10px;border-radius:12px;background:var(--ground);color:var(--ink)}
 .spw.on{background:#FFE07A}
 .spsent .st{margin-left:auto;font-size:26px}
+
+/* tidy-up (Nov 26): search on home, parent links, section labels, Les mots (word list with sound) */
+.cat-h small{font-family:system-ui,sans-serif;font-size:15px;font-weight:600;color:var(--soft)}
+.find{position:relative;display:flex;align-items:center;margin:0 0 18px}
+.find .fi{position:absolute;left:18px;font-size:22px;pointer-events:none}
+.find input{flex:1;min-width:0;font:600 20px var(--fd);color:var(--ink);background:var(--paper);border:3px solid var(--line);border-radius:999px;padding:12px 52px 12px 54px;-webkit-user-select:text;user-select:text;-webkit-appearance:none;appearance:none}
+.find input::-webkit-search-cancel-button{display:none}
+.find input:focus{outline:none;border-color:var(--sky)}
+.find button{position:absolute;right:8px;width:40px;height:40px;border-radius:50%;background:var(--ground);font-size:18px;color:var(--ink)}
+#findRes h3{font-size:20px;font-weight:600;margin:6px 0 10px}
+#findRes .grid{margin-bottom:18px}
+#findRes .none{color:var(--soft);font-family:system-ui,sans-serif;font-size:16px;margin:0 0 18px}
+.plinks{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px;margin-top:26px}
+.plink{display:flex;align-items:center;gap:14px;text-align:left;background:var(--paper);border:2px dashed var(--line);border-radius:var(--r);padding:14px 18px;color:var(--ink);font-family:var(--fd)}
+.plink .pi{font-size:40px;line-height:1}
+.plink b{display:block;font-size:22px;font-weight:600}
+.plink i{display:block;font-style:normal;font-family:system-ui,sans-serif;font-size:14px;color:var(--soft)}
+.dclist{display:flex;flex-wrap:wrap;gap:10px}
+.dcw{display:inline-flex;align-items:center;gap:8px;text-align:left;font-family:var(--fk);font-weight:700;font-size:24px;line-height:1.25;color:var(--ink);background:var(--ground);border:3px solid var(--line);border-radius:16px;padding:8px 14px;max-width:100%}
+.dcw .src{font-size:18px;flex:none}
+.dcw.t{border-color:#C9B6F2;background:#F6F1FF}
+.dcw.on{border-color:var(--sun);background:#FFF3C4}
+.dcw.long{font-size:20px}
+.dcmore{font-family:system-ui,sans-serif;font-size:15px;color:var(--soft);align-self:center}
 </style>
 
 <!-- Pixel animals: Angais/pixel-art-atlas-1.4m (Hugging Face), CC0 1.0 public domain. -->
@@ -886,6 +910,8 @@ body:not(.world) .perch{display:none}
   <main>
   <!-- HOME -->
   <section id="home" class="screen">
+    <div class="find"><span class="fi" aria-hidden="true">🔎</span><input id="findQ" type="search" lang="en" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Find a game or a word…" aria-label="Find a game or a word"><button id="findX" aria-label="Clear" hidden>✕</button></div>
+    <div id="findRes" hidden></div>
     <div class="week" id="week" hidden><h2 class="week-h"><span class="new-tag">🆕</span>NOUVEAU</h2><div class="week-grid" id="weekGrid"></div></div>
     <div class="doors">
       <button class="door" style="--dc:#F2594B;--dd:#C9433A" data-go="cat-langage"><span class="dart"><span class="dbig">Aa</span>📚</span><b>Langage</b><span class="hint">Sounds, monster words, the body, poems</span></button>
@@ -896,8 +922,16 @@ body:not(.world) .perch{display:none}
       <button class="door" style="--dc:#2A6FC4;--dd:#1D4F8E" data-go="videos"><span class="dart">📺🎬</span><b>Les vidéos</b><span class="hint">the teacher's class videos to watch</span></button>
       <div class="meadow" id="meadow"><span class="hill" aria-hidden="true"></span><i class="fl f1" aria-hidden="true"></i><i class="fl f2" aria-hidden="true"></i><i class="fl f3" aria-hidden="true"></i><button class="uni" id="uni" aria-label="Unicorn"><span class="u"><span class="ug"></span></span></button></div>
       </div>
-    <div class="parent">
-      <h3>For Mom &amp; Dad</h3>
+    <div class="plinks">
+      <button class="plink" data-go="dico"><span class="pi">🔊</span><span><b>Les mots</b><i lang="en">Every word with sound: search and listen</i></span></button>
+      <button class="plink" data-go="parents"><span class="pi">👨‍👩‍👧</span><span><b lang="en">For Mom &amp; Dad</b><i lang="en">What's new, what to print, how it works</i></span></button>
+    </div>
+  </section>
+
+  <!-- FOR MOM & DAD (the notes that used to sit under the doors) -->
+  <section id="parents" class="screen" hidden>
+    <div class="bar"><button class="back" data-home aria-label="Back">←</button><h2 lang="en">For Mom &amp; Dad</h2></div>
+    <div class="parent" style="margin-top:0">
       Everything here comes from the teacher's Google Classroom (September to November), including her posters. 🎙️ is her own voice (sounds a, i, e &amp; u, the ou and s mots monstres, the November words, Un ours, Turlututu, Mon chat, Les couleurs, Violette). 🔊 is a generated French voice for words she didn't record: Grok (standard French) until October, an ElevenLabs Québécois voice since November, each clip checked by speech-to-text. 🎵 plays her song. Each finished activity earns a star ⭐.
       <ul>
         <li><b>New Nov 25 (🆕):</b> homework «Les devoirs, November 25», 3 sheets (no recordings from her this time; 🔊 generated voice)
@@ -981,80 +1015,99 @@ body:not(.world) .perch{display:none}
     </div>
   </section>
 
+  <!-- LES MOTS: every word that has a recording, to search and hear -->
+  <section id="dico" class="screen" hidden>
+    <div class="bar"><button class="back" data-home aria-label="Back">←</button><h2>🔊 Les mots</h2></div>
+    <div class="find"><span class="fi" aria-hidden="true">🔎</span><input id="dcQ" type="search" lang="fr" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Type a word (accents not needed)…" aria-label="Search a word"><button id="dcX" aria-label="Clear" hidden>✕</button></div>
+    <div class="tabs" id="dcTabs"><button class="tab" data-dcf="all" aria-pressed="true">Tout</button><button class="tab" data-dcf="teach" aria-pressed="false">🎙️ the teacher</button><button class="tab" data-dcf="word" aria-pressed="false">🔤 Mots</button><button class="tab" data-dcf="phrase" aria-pressed="false">💬 Phrases</button><button class="tab" data-dcf="num" aria-pressed="false">🔢 Nombres</button></div>
+    <p class="hint" id="dcCount" style="margin:0 0 10px"></p>
+    <div class="panel"><div class="dclist" id="dcList"></div></div>
+    <p class="hint" style="margin:12px 0 0">Tap a word to hear it. 🎙️ = the teacher's own recording. 🔊 = generated French voice, each clip checked. Type a word from a homework sheet to find it; accents are not needed (ecole finds école), and a number like 58 finds its French word. Tabs: all · her voice only · single words · sentences · numbers.</p>
+  </section>
+
   <section id="cat-langage" class="screen catscreen" hidden>
     <div class="bar"><button class="back" data-home aria-label="Back">←</button><h2 style="color:#C9433A">🥐 Langage</h2></div>
-    <h3 class="cat-h">🎮 Les jeux</h3>
+    <h3 class="cat-h">🎮 Les jeux <small lang="en">games</small></h3>
     <div class="grid">
-      <button class="tile new" data-new="1" style="--c:#1E6FD0" data-go="lire"><span class="new-tag">🆕 NOUVEAU</span><span class="ic">🎲📖</span><b>Je commence à lire</b><span class="hint">Homework: read each square, move to the end</span></button>
-      <button class="tile" style="--c:#8C66D9" data-go="runner" aria-label="Unicorn run"><span class="ic">🦄💨🫧</span><b>🦄 🌈</b><span class="hint">Run, listen, jump or slide to the right bubble</span></button>
-      <button class="tile" style="--c:#E53935" data-go="lettres"><span class="ic">🐞🦒🐒</span><b>Les types de lettres</b><span class="hint">Ladybug, giraffe or monkey letter?</span></button>
-      <button class="tile" style="--c:#C9621F" data-go="voyelleo"><span class="ic">🖍️🤖🌹</span><b>La voyelle o</b><span class="hint">Homework: draw a picture for each word</span></button>
-      <button class="tile" style="--c:#C9433A" data-go="coq"><span class="ic">🐓📖</span><b>Olivier Coq</b><span class="hint">Homework: find the "o" sound in the story</span></button>
-      <button class="tile" style="--c:#1F9A6C" data-go="tri"><span class="ic">🧺<span class="big" style="font-size:38px;color:#F2594B">a</span><span class="big" style="font-size:38px;color:#1F9A6C">e</span><span class="big" style="font-size:38px;color:#3A86E0">i</span></span><b>Le tri des sons</b><span class="hint">Homework: is it a, e or i?</span></button>
       <button class="tile new" data-new="1" style="--c:#8C66D9" data-go="monstre" data-mode="mots" data-done="monstre:mots"><span class="new-tag">🆕 NOUVEAU</span><span class="ic">👾✉️</span><b>Les mots monstres</b><span class="hint">Read the big word, feed it to the monster!</span></button>
       <button class="tile new" data-new="1" style="--c:#F2594B" data-go="pop" data-mode="sons" data-done="pop:sons"><span class="new-tag">🆕 NOUVEAU</span><span class="ic">🎈<span class="big" style="font-size:36px;color:#F2594B">a</span><span class="big" style="font-size:36px;color:#3A86E0">i</span><span class="big" style="font-size:36px;color:#1F9A6C">e</span><span class="big" style="font-size:36px;color:#C9621F">o</span><span class="big" style="font-size:36px;color:#0B8C8C">u</span></span><b>Pop les sons</b><span class="hint">Hear a word, pop its balloon</span></button>
+      <button class="tile" style="--c:#8C66D9" data-go="runner" aria-label="Unicorn run"><span class="ic">🦄💨🫧</span><b>🦄 🌈</b><span class="hint">Run, listen, jump or slide to the right bubble</span></button>
+      <button class="tile new" data-new="1" style="--c:#1E6FD0" data-go="lire"><span class="new-tag">🆕 NOUVEAU</span><span class="ic">🎲📖</span><b>Je commence à lire</b><span class="hint">Homework: read each square, move to the end</span></button>
       <button class="tile" style="--c:#5B6FE0" data-go="memoire"><span class="ic">🃏🍁</span><b>Jeu de mémoire</b><span class="hint">Find the pairs: school, October and November words</span></button>
       <button class="tile" style="--c:#E53935" data-go="monstre" data-mode="corps" data-done="monstre:corps"><span class="ic">👾✋</span><b>Le monstre du corps</b><span class="hint">November words: say the body part, feed the monster!</span></button>
       <button class="tile" style="--c:#DB4F87" data-go="pop" data-mode="corps" data-done="pop:corps"><span class="ic">🎈👂</span><b>Pop le corps</b><span class="hint">Hear a November word, pop its balloon</span></button>
-      <button class="tile" style="--c:#1E6FD0" data-go="trirlm"><span class="ic">🧺<span class="big" style="font-size:38px;color:#1E6FD0">r</span><span class="big" style="font-size:38px;color:#7A4FD0">l</span><span class="big" style="font-size:38px;color:#C9621F">m</span></span><b>Le tri r · l · m</b><span class="hint">Do you hear r, l or m?</span></button>
     </div>
-    <h3 class="cat-h">📖 J'apprends</h3>
+    <h3 class="cat-h">🔤 Les sons <small lang="en">sounds and letters</small></h3>
     <div class="grid">
       <button class="tile new" data-new="1" style="--c:#B0009B" data-go="sonparson"><span class="new-tag">🆕 NOUVEAU</span><span class="ic">🐍❤️</span><b>Son par son</b><span class="hint">Homework: tap the sounds, read the words and sentences</span></button>
-      <button class="tile" style="--c:var(--sky)" data-go="sons"><span class="ic"><span class="big" style="color:var(--tomato)">a</span><span class="big">i</span><span class="big" style="color:var(--leaf)">e</span><span class="big" style="color:#C9621F">o</span><span class="big" style="color:#0B8C8C">u</span></span><b>Les sons</b><span class="hint">Listen &amp; sort words by sound</span></button>
       <button class="tile" style="--c:#B0009B" data-go="sonss"><span class="ic">🐍☀️</span><b>Le son s</b><span class="hint">the teacher's s words: look, find, tap the s</span></button>
-      <button class="tile" style="--c:#C9621F" data-go="sissie"><span class="ic">👧🎶</span><b>Sissie</b><span class="hint">Poem: find the "s" words, give Sissie a whistle</span></button>
       <button class="tile" style="--c:#0B8C8C" data-go="sonou"><span class="ic">🐻🦉🪰</span><b>Le son ou</b><span class="hint">the teacher's ou poster: look, find, tap the ou</span></button>
-      <button class="tile" style="--c:#8A5A2B" data-go="ours"><span class="ic">🐻🍲</span><b>Un ours</b><span class="hint">Tongue twister: find the "ou" words, feed the bear</span></button>
       <button class="tile" style="--c:#1E6FD0" data-go="sonr"><span class="ic">🦈🧚🦙</span><b>Les sons r · é · l · m</b><span class="hint">the teacher's sound words: look, find, tap the letter</span></button>
+      <button class="tile" style="--c:var(--sky)" data-go="sons"><span class="ic"><span class="big" style="color:var(--tomato)">a</span><span class="big">i</span><span class="big" style="color:var(--leaf)">e</span><span class="big" style="color:#C9621F">o</span><span class="big" style="color:#0B8C8C">u</span></span><b>Les sons</b><span class="hint">Listen &amp; sort words by sound</span></button>
+      <button class="tile" style="--c:#1F9A6C" data-go="tri"><span class="ic">🧺<span class="big" style="font-size:38px;color:#F2594B">a</span><span class="big" style="font-size:38px;color:#1F9A6C">e</span><span class="big" style="font-size:38px;color:#3A86E0">i</span></span><b>Le tri des sons</b><span class="hint">Homework: is it a, e or i?</span></button>
+      <button class="tile" style="--c:#1E6FD0" data-go="trirlm"><span class="ic">🧺<span class="big" style="font-size:38px;color:#1E6FD0">r</span><span class="big" style="font-size:38px;color:#7A4FD0">l</span><span class="big" style="font-size:38px;color:#C9621F">m</span></span><b>Le tri r · l · m</b><span class="hint">Do you hear r, l or m?</span></button>
+      <button class="tile" style="--c:#E53935" data-go="lettres"><span class="ic">🐞🦒🐒</span><b>Les types de lettres</b><span class="hint">Ladybug, giraffe or monkey letter?</span></button>
       <button class="tile" style="--c:var(--tomato)" data-go="trace" data-tr="a"><span class="ic"><span class="big">Aa</span>✏️</span><b>J'écris les lettres</b><span class="hint">Trace a, i, e, o, u</span></button>
-      <button class="tile" style="--c:var(--leaf)" data-go="vocnov"><span class="ic">🍁✋👂</span><b>Vocabulaire</b><span class="hint">November words: the body and action words (and the older ones)</span></button>
-      <button class="tile" style="--c:var(--sun)" data-go="chat"><span class="ic">🐱</span><b>Mon chat</b><span class="hint">Read the poem, find the "a"</span></button>
-      <button class="tile" style="--c:#C77D2E" data-go="cheval"><span class="ic">🐴🍒</span><b>Petit cheval</b><span class="hint">Poem: find the "e" words, feed the horse</span></button>
-      <button class="tile" style="--c:#7D8AA6" data-go="souris"><span class="ic">🐭🍚</span><b>La souris</b><span class="hint">Poem: find the "i" words, feed the mouse</span></button>
+    </div>
+    <h3 class="cat-h">📖 Les poèmes <small lang="en">poems and stories</small></h3>
+    <div class="grid">
+      <button class="tile" style="--c:#C9621F" data-go="sissie"><span class="ic">👧🎶</span><b>Sissie</b><span class="hint">Poem: find the "s" words, give Sissie a whistle</span></button>
+      <button class="tile" style="--c:#8A5A2B" data-go="ours"><span class="ic">🐻🍲</span><b>Un ours</b><span class="hint">Tongue twister: find the "ou" words, feed the bear</span></button>
+      <button class="tile" style="--c:#7D8AA6" data-go="emilie"><span class="ic">🐘🎒</span><b>Émilie Éléphant</b><span class="hint">Homework: find the words with é</span></button>
+      <button class="tile" style="--c:#0B8C8C" data-go="lucie"><span class="ic">🐢🎶</span><b>Lucie Tortue</b><span class="hint">Homework: put the words in order</span></button>
       <button class="tile" style="--c:#0B8C8C" data-go="turlu"><span class="ic">🐢🚀</span><b>Turlututu</b><span class="hint">Poem: find the "u" sound, feed the turtle</span></button>
       <button class="tile" style="--c:#C9621F" data-go="jojo"><span class="ic">🤕🩹</span><b>Petit Jojo</b><span class="hint">Poem: find the "o" sound, help Jojo</span></button>
-      <button class="tile" style="--c:#0B8C8C" data-go="lucie"><span class="ic">🐢🎶</span><b>Lucie Tortue</b><span class="hint">Homework: put the words in order</span></button>
-      <button class="tile" style="--c:#7D8AA6" data-go="emilie"><span class="ic">🐘🎒</span><b>Émilie Éléphant</b><span class="hint">Homework: find the words with é</span></button>
+      <button class="tile" style="--c:#C9433A" data-go="coq"><span class="ic">🐓📖</span><b>Olivier Coq</b><span class="hint">Homework: find the "o" sound in the story</span></button>
+      <button class="tile" style="--c:#7D8AA6" data-go="souris"><span class="ic">🐭🍚</span><b>La souris</b><span class="hint">Poem: find the "i" words, feed the mouse</span></button>
+      <button class="tile" style="--c:#C77D2E" data-go="cheval"><span class="ic">🐴🍒</span><b>Petit cheval</b><span class="hint">Poem: find the "e" words, feed the horse</span></button>
+      <button class="tile" style="--c:var(--sun)" data-go="chat"><span class="ic">🐱</span><b>Mon chat</b><span class="hint">Read the poem, find the "a"</span></button>
+    </div>
+    <h3 class="cat-h">🖼️ Le vocabulaire <small lang="en">words of the month</small></h3>
+    <div class="grid">
+      <button class="tile" style="--c:var(--leaf)" data-go="vocnov"><span class="ic">🍁✋👂</span><b>Vocabulaire</b><span class="hint">November words: the body and action words (and the older ones)</span></button>
+      <button class="tile" style="--c:#C9621F" data-go="voyelleo"><span class="ic">🖍️🤖🌹</span><b>La voyelle o</b><span class="hint">Homework: draw a picture for each word</span></button>
     </div>
   </section>
 
   <section id="cat-maths" class="screen catscreen" hidden>
     <div class="bar"><button class="back" data-home aria-label="Back">←</button><h2 style="color:#6B4DB0">➗ Les mathématiques</h2></div>
-    <h3 class="cat-h">🎮 Les jeux</h3>
+    <h3 class="cat-h">🎮 Les jeux <small lang="en">games</small></h3>
     <div class="grid">
-      <button class="tile new" data-new="1" style="--c:#23824A" data-go="bonds"><span class="new-tag">🆕 NOUVEAU</span><span class="ic">👻<span class="big" style="font-size:36px;color:#23824A">+2</span></span><b>Je compte par bonds</b><span class="hint">Homework: count by 2 and by 5</span></button>
-      <button class="tile" style="--c:#23824A" data-go="croco"><span class="ic">🐊<span class="big" style="font-size:40px;color:#23824A">&gt;</span></span><b>Les crocodiles</b><span class="hint">Homework: the crocodile eats the bigger number</span></button>
-      <button class="tile" style="--c:#E53935" data-go="pommes"><span class="ic">🍎🐛</span><b>Les pommes</b><span class="hint">Homework: before, after, between (up to 56)</span></button>
       <button class="tile new" data-new="1" style="--c:#15808F" data-go="monstre" data-mode="nombres" data-done="monstre:nombres"><span class="new-tag">🆕 NOUVEAU</span><span class="ic">👾<span class="big" style="font-size:40px">7</span></span><b>Le monstre des nombres</b><span class="hint">Say the number, feed it to the monster!</span></button>
       <button class="tile new" data-new="1" style="--c:#8C66D9" data-go="pop" data-mode="nombres" data-done="pop:nombres"><span class="new-tag">🆕 NOUVEAU</span><span class="ic">🎈<span class="big" style="font-size:40px">12</span></span><b>Pop les nombres</b><span class="hint">Hear a number, pop its balloon</span></button>
-      <button class="tile" style="--c:#15808F" data-go="points"><span class="ic"><span class="big" style="font-size:40px">1·2·3</span></span><b>Relie les points</b><span class="hint">Connect the dots 1 to 10</span></button>
-      <button class="tile" style="--c:#8E44AD" data-go="prepos"><span class="ic">🐁☕</span><b>Où est la souris ?</b><span class="hint">Homework: read the sentence, find the mouse and the cup</span></button>
-      <button class="tile" style="--c:#8C66D9" data-go="monstre" data-mode="tasse" data-done="monstre:tasse"><span class="ic">👾🐁☕</span><b>Le monstre de la souris</b><span class="hint">Say where the mouse is, feed the monster!</span></button>
-      <button class="tile" style="--c:#DB4F87" data-go="pop" data-mode="tasse" data-done="pop:tasse"><span class="ic">🎈🐁☕</span><b>Pop la souris</b><span class="hint">Hear the sentence, pop the right picture</span></button>
-      <button class="tile" style="--c:#15808F" data-go="dessine"><span class="ic">📖🖍️</span><b>Lis la phrase et fais un dessin</b><span class="hint">Homework: read (or listen), then draw it</span></button>
-      <button class="tile" style="--c:#1F9A6C" data-go="formes"><span class="ic">🔺🟦⬟</span><b>Les côtés</b><span class="hint">Homework: sort the shapes by their sides</span></button>
-      <button class="tile" style="--c:#C9621F" data-go="enordre"><span class="ic">🎃<span class="big" style="font-size:36px">11·12</span></span><b>En ordre !</b><span class="hint">Homework: the pumpkins from small to big</span></button>
       <button class="tile" style="--c:#8C66D9" data-go="monstre" data-mode="formes" data-done="monstre:formes"><span class="ic">👾🔺⭐</span><b>Le monstre des formes</b><span class="hint">Say the shape, feed it to the monster!</span></button>
       <button class="tile" style="--c:#DB4F87" data-go="pop" data-mode="formes" data-done="pop:formes"><span class="ic">🎈🟦❤️</span><b>Pop les formes</b><span class="hint">Hear a shape, pop its balloon</span></button>
-      <button class="tile" style="--c:#B0009B" data-go="coincote"><span class="ic">📐➡️</span><b>Coin et côté</b><span class="hint">the teacher's posters: is it a corner or a side?</span></button>
+      <button class="tile" style="--c:#8C66D9" data-go="monstre" data-mode="tasse" data-done="monstre:tasse"><span class="ic">👾🐁☕</span><b>Le monstre de la souris</b><span class="hint">Say where the mouse is, feed the monster!</span></button>
+      <button class="tile" style="--c:#DB4F87" data-go="pop" data-mode="tasse" data-done="pop:tasse"><span class="ic">🎈🐁☕</span><b>Pop la souris</b><span class="hint">Hear the sentence, pop the right picture</span></button>
+      <button class="tile" style="--c:#15808F" data-go="points"><span class="ic"><span class="big" style="font-size:40px">1·2·3</span></span><b>Relie les points</b><span class="hint">Connect the dots 1 to 10</span></button>
     </div>
-    <h3 class="cat-h">📖 J'apprends</h3>
+    <h3 class="cat-h">🔢 Les nombres <small lang="en">numbers</small></h3>
     <div class="grid">
+      <button class="tile new" data-new="1" style="--c:#23824A" data-go="bonds"><span class="new-tag">🆕 NOUVEAU</span><span class="ic">👻<span class="big" style="font-size:36px;color:#23824A">+2</span></span><b>Je compte par bonds</b><span class="hint">Homework: count by 2 and by 5</span></button>
       <button class="tile" style="--c:var(--grape)" data-go="nombres"><span class="ic"><span class="big">1 2 3</span></span><b>Les nombres</b><span class="hint">Count to 20, put in order, count dots</span></button>
       <button class="tile" style="--c:var(--tomato)" data-go="trace" data-tr="1"><span class="ic"><span class="big">12</span>✏️</span><b>J'écris les nombres</b><span class="hint">Trace 1 to 10</span></button>
+      <button class="tile" style="--c:#C9621F" data-go="enordre"><span class="ic">🎃<span class="big" style="font-size:36px">11·12</span></span><b>En ordre !</b><span class="hint">Homework: the pumpkins from small to big</span></button>
+      <button class="tile" style="--c:#E53935" data-go="pommes"><span class="ic">🍎🐛</span><b>Les pommes</b><span class="hint">Homework: before, after, between (up to 56)</span></button>
+      <button class="tile" style="--c:#23824A" data-go="croco"><span class="ic">🐊<span class="big" style="font-size:40px;color:#23824A">&gt;</span></span><b>Les crocodiles</b><span class="hint">Homework: the crocodile eats the bigger number</span></button>
+    </div>
+    <h3 class="cat-h">🔺 Les formes <small lang="en">shapes, and where is the mouse</small></h3>
+    <div class="grid">
       <button class="tile" style="--c:#1E6FD0" data-go="formes2d"><span class="ic">🟦🔺⬟</span><b>Les formes 2D</b><span class="hint">the teacher's 10 shapes: look, listen, find</span></button>
+      <button class="tile" style="--c:#1F9A6C" data-go="formes"><span class="ic">🔺🟦⬟</span><b>Les côtés</b><span class="hint">Homework: sort the shapes by their sides</span></button>
+      <button class="tile" style="--c:#B0009B" data-go="coincote"><span class="ic">📐➡️</span><b>Coin et côté</b><span class="hint">the teacher's posters: is it a corner or a side?</span></button>
+      <button class="tile" style="--c:#8E44AD" data-go="prepos"><span class="ic">🐁☕</span><b>Où est la souris ?</b><span class="hint">Homework: read the sentence, find the mouse and the cup</span></button>
+      <button class="tile" style="--c:#15808F" data-go="dessine"><span class="ic">📖🖍️</span><b>Lis la phrase et fais un dessin</b><span class="hint">Homework: read (or listen), then draw it</span></button>
     </div>
   </section>
 
   <section id="cat-chansons" class="screen catscreen" hidden>
     <div class="bar"><button class="back" data-home aria-label="Back">←</button><h2 style="color:#A93767">🎤 Les chansons</h2></div>
-    <h3 class="cat-h">🎮 Les jeux</h3>
+    <h3 class="cat-h">🎮 Les jeux <small lang="en">games</small></h3>
     <div class="grid">
       <button class="tile" style="--c:#DB4F87" data-go="pop" data-mode="couleurs" data-done="pop:couleurs"><span class="ic">🎈🎈🎈</span><b>Pop les couleurs</b><span class="hint">Hear a colour, pop that balloon</span></button>
       <button class="tile" style="--c:#C9621F" data-go="monstre" data-mode="couleurs" data-done="monstre:couleurs"><span class="ic">👾🎨</span><b>Le monstre des couleurs</b><span class="hint">Say the colour, feed it to the monster!</span></button>
     </div>
-    <h3 class="cat-h">📖 J'apprends</h3>
+    <h3 class="cat-h">📖 J'apprends <small lang="en">learn</small></h3>
     <div class="grid">
       <button class="tile" style="--c:var(--pink)" data-go="couleurs"><span class="ic">🍦</span><b>Les couleurs</b><span class="hint">Build the ice-cream song</span></button>
       <button class="tile" style="--c:#C9621F" data-go="violette"><span class="ic">🚲</span><b>Violette à bicyclette</b><span class="hint">Count 1 to 7</span></button>
@@ -1064,14 +1117,14 @@ body:not(.world) .perch{display:none}
 
   <section id="cat-sciences" class="screen catscreen" hidden>
     <div class="bar"><button class="back" data-home aria-label="Back">←</button><h2 style="color:#0E5F6B">🔬 Les sciences</h2></div>
-    <h3 class="cat-h">🎮 Les jeux</h3>
+    <h3 class="cat-h">🎮 Les jeux <small lang="en">games</small></h3>
     <div class="grid">
       <button class="tile" style="--c:#15808F" data-go="pop" data-mode="temps" data-done="pop:temps"><span class="ic">🎈🌧️</span><b>Pop le temps</b><span class="hint">Hear the weather, pop its balloon</span></button>
       <button class="tile" style="--c:#5B6FE0" data-go="monstre" data-mode="temps" data-done="monstre:temps"><span class="ic">👾❄️</span><b>Le monstre du temps</b><span class="hint">Say the weather, feed it to the monster!</span></button>
       <button class="tile" style="--c:#1E6FD0" data-go="monstre" data-mode="saisons" data-done="monstre:saisons"><span class="ic">👾❄️🌷</span><b>Le monstre des saisons</b><span class="hint">Look at the picture, say the season, feed the monster!</span></button>
       <button class="tile" style="--c:#C9621F" data-go="pop" data-mode="saisons" data-done="pop:saisons"><span class="ic">🎈☀️🍂</span><b>Pop les saisons</b><span class="hint">Hear a season or a month, pop its balloon</span></button>
     </div>
-    <h3 class="cat-h">📖 J'apprends</h3>
+    <h3 class="cat-h">📖 J'apprends <small lang="en">learn</small></h3>
     <div class="grid">
       <button class="tile" style="--c:#F2A93B" data-go="temps"><span class="ic">☀️🌈</span><b>Quel temps fait-il ?</b><span class="hint">the teacher's 12 weather cards + today's weather</span></button>
       <button class="tile" style="--c:#23824A" data-go="saisons"><span class="ic">❄️🌷☀️🍂</span><b>Les 4 saisons</b><span class="hint">The seasons and their months, then sort the pictures</span></button>
@@ -1081,11 +1134,11 @@ body:not(.world) .perch{display:none}
 
   <section id="cat-etudes" class="screen catscreen" hidden>
     <div class="bar"><button class="back" data-home aria-label="Back">←</button><h2 style="color:#185F37">🏘️ Les études sociales</h2></div>
-    <h3 class="cat-h">🎮 Les jeux</h3>
+    <h3 class="cat-h">🎮 Les jeux <small lang="en">games</small></h3>
     <div class="grid">
       <button class="tile" style="--c:#1E6FD0" data-go="commu"><span class="ic">🧑‍🚒🏠🚲</span><b>Dans une communauté</b><span class="hint">People, places or things? Sort the teacher's board</span></button>
     </div>
-    <h3 class="cat-h">📖 J'apprends</h3>
+    <h3 class="cat-h">📖 J'apprends <small lang="en">learn</small></h3>
     <div class="grid">
       <button class="tile" style="--c:#23824A" data-go="famille"><span class="ic">👨‍👩‍👧‍👦</span><b>Ma famille</b><span class="hint">Voici maman, papa… + homework</span></button>
     </div>
@@ -3520,7 +3573,7 @@ mwMon.setAttribute('role','button'); mwMon.tabIndex=0;
 mwMon.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); mwMon.click() } });
 /* ---------- the little world: a random cast of pixel animals each visit (sounds only, no words) ---------- */
 const RM=matchMedia('(prefers-reduced-motion: reduce)');
-const WORLD=id=>id==='home'||id==='album'||id==='videos'||/^cat-/.test(id);
+const WORLD=id=>id==='home'||id==='album'||id==='videos'||id==='dico'||id==='parents'||/^cat-/.test(id);
 const SPR={"unicorn":[["data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABCklEQVR42mNggAIOVvH/IMxALgBp/vO6DG4IyQaCFH+YaPb/95sUsMbv2w7/f3fzNYohIAsIGvJ2mdP/L+nz/192bvz/48QFuAEgzf////v/63nvf5yaQTa+efcZjj+FRsNdhNcFIAXIGmH8l8FVYBcRDAuQApBzv/hMAWv8PvkwmF5+7cn/Ge7biDcAhEGBB8LoBqBjrIbA8JpVx+HeWX/nFRjDvPR1gwdKuIABcsiiG4COYTEFNwA9eogxABRW0y89RRiC7oK46I7/e3ddhwcoLFBhBoDUNTcfxwwLkEBp2SKUcACxU1KWwqOWYEAWObcQNIBglILwpchpYKcj2wjjE5250BVjEwMAK/J5GAEovIAAAAAASUVORK5CYII=","L"],["data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAA/ElEQVR42mNgAAImRp7/IMxALgBp/vOwCG4IyQaCFL+vsvr/53UZWOP3Q6f+v3n3mTxDQBpfBleB6e/7Yok3BGxz10awRhj+VOWN4jW8mmGakL3wJtLr/48FHvgNAEn+OHsb4WygZhAfxK43iAIbgh64KAbCDABhuM1QXKGeC8YwTSDX/LkZjuktZJN3zb6NYggy/hJmBsYfN/hj9xYhA2Bh9DHVjDIDHrq7oIQNXHOyyyQwhhmyfMo5MH6eOxnFAOSwwTAA2RWwcIlzawKLPXz6+j/WmIAZkKTmi9UAEJ5mUgA3AG+aAOE99kn/P7ZFYBgAEyMqWaMrxJVDAUBJdz6/Y38PAAAAAElFTkSuQmCC","L"],["data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAA+klEQVR42mNgAAJmRr7/IMxALgBp/n0v+z/MIJINBCn+0OUFN+RTaPT/H1s3km7I41q3/z8vR/z//e3J/2/rl8ANJM4LQE3o+N18d8IGoGsW4zOCs/VWT/lfcroVvyEgSZB/XwZXYbjA3qDrv0XlWbgBWAMYZgAIt9hk///a3fb/66IlcANAGKbponPm/zepVWCMYQgMgwMPS3iAcJRaHNwQrAYsd8vBawAIg9TlWM9FGADTCMNfSioJGmCWd/R/2IkjEENgBsDCAqQIFiYwDHIyugEgjNUAWApE9hay10ABjTUmQPhmYAlGEka3gGCaQFdAkgGEDMZmAQD664bDdO9ykwAAAABJRU5ErkJggg==","L"]],"bluebird":[["data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAyUlEQVR42mNgwAKYGDj+o2MGYgFIcezSmxiYKENwaSbKEEKa8RqC7FdcmpDlUAyBSYIANkOwyWE1AFnhr5tl/79Ps0axHSaH1QDH2iNwhSCNMPxjgQdKVILUYQ0HkEBI+ymwpHH+rv8LPdXBGKYBV5hgGALSjI5xxYZxYD+mV0Aajj77hIEtY5ZQZgBIMbpmEGZjFsb0RvfyazgNQcY4UyUsgEAGYcMEMxdIcnOQ8f8WMx2UKATFCtG5EuS3Y4kmcD+CNMLSBLpaAHe3imiu2Rt5AAAAAElFTkSuQmCC","F"],["data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAA70lEQVR42mNgQAPsrJL/kTEDKQCkYeKpt2ActOgxGBNtCEhh3enX/2df/wDXTJIhIEXoGkkyBN2AT3/+/kcWw2sASPL3obD/vzb7gzFMAy4DMAIYxLmYZf3/Uak1mIZp+rJwI4Y3QNip8cp/i8qzmIboh67FGw4wQ8zyjqIaQKxmEAbZLqOV/F/FqBrTgB1PvqBgdbdpcI0gG2EYRTPMAMvErRgGgLC4cjiKZgy/IxtSPOc6GCMbAOKDDAFhkNNBGGeUwkIZZhA6Jjp/gBSt8zKBawBFLUl54kOX1/+9YVZgTV8XhMENIylXwjQQcjYAdStmDFlk10QAAAAASUVORK5CYII=","L"],["data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAA5UlEQVR42mNgwAKYmfj/I2MGUgBIw44nX8A4asMjMCbaEJjmyn0P4ZqJNgSkoOPgS6yaCRoCkgAp4OKQA2NkTTAxmDhWQ0CCIAV////HMAAmRtAAZNt+Poz5/+W4C4rYzQ8/4QZgxA7MABD+uMEfjo9F6v53rD3y37ZoH0o4qJgW/beMWQIxBESAFMhoJcMV7XbXBmNcgQnCIENwGkAMVrFqJs0AceVw3FEK4oAMQPYrMgaJgzDIEJA6EMaIDVjIwhTjw3hTJTZDkoycwDFCMHOBJJ/32aIoBmFYtBKVqdATCqFsDQAq2YS9iJmHKwAAAABJRU5ErkJggg==","F"],["data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAA0klEQVR42mNgwAJYmUX+I2MGUgBIQ+e1N/+DFj3+H7XhERgTbQhI4ezrH+AakTFBQ2A2Y9MMwlrxW/AbApKsO/0aRRMIgMTRDcAaNjDBnxcywRjmbHQDYHzj/F2ohoA431f6wzE2L4jLRP/n5lDAboAhjyVYYrmXLhjjCgucYQJzGjqW1csjzYBZTz/CMS4DVG36sAciNgNAfkU2BKQZqwH4vGGWdxQcgDBMMD2A/IcLE5WsQYo2BxnD431vmBXxGQuk6GKWNVwTMpukHIk32SIBAPAHZH/rtKamAAAAAElFTkSuQmCC","L"]],"owl":[["data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABC0lEQVR42mNgwALYWcT+g/BrjdT/MDYDMQCm+OeO8P/zku79//045f8L15z/f447EjYIJNntpQVWVHI76v+vG/7/44+9+f/zvNv/Z20m/5Hl8RoAwpWWCv+TdJRQMEyOoCve3toIxjANIAwTAxmE1wUwhciGoIuBXIfVEJgBlga+/9ENQxY7PT0FvwGw0Aaxv8+z/38jQx5FDKsBIAFPeT2w5LuTK8EYpLjXUgZMw8TOzizGHpCwGPCQVwYbgu5vmM3IAYtiCLIBu3tyUTBIIwyD5AkaAFL44cgksGZ0GqcBMENgBmAzBNkVIIwzJkCBicsbIDZReWKPr+L/eVYqcMXIfKJzJLJifLYCABszfbOU5A9WAAAAAElFTkSuQmCC","F"],["data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAA10lEQVR42mNgoAUQYeX5jw0TrXlpgjFWTNAQmOYvjw6DMUwjMh+vISBJmGJcGKsBMEGYAfEJef+RDUPmI6tFcTYsoECK2BkZwOw7HRr/v213gPNhBoDwmgIHiGEwDkwA2bk2CpL/j+dbYHgBpBYeHiAiTFMaqyEPDywFG4KuGYRBelC8gWwIiI0Nw2yON1TBDEyYISAFN7a2Y4Q+SAzDZmyxATIdpBjZEBgfq83YDMkK8IdrgmGQGEnJGaQBGZOkeX+q1v/30x3hcQ5KD6DoJMkQZMX4ciMAiUVQ8pnbHDYAAAAASUVORK5CYII=","F"]],"ladybug":[["data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAyklEQVR42mNgwArY/hMnhhcgayBDs69fy39+XmkwlhaW+0+CIWz/v358haQJglWVdYgxhO3/3MQAFI3YMQ7NF/U1/v+6/xqM3zc0wp1/2Ejj/3llRTBOFxHHZQgbXDMIo3uBgAEQBSCNIP9/Ts8A89E1g1wE4mMxBKLI0DIbxcnVQmL/j8nKEmcASCGyYmwGwLyA0wUUGIAwBJZ40A2AhQfeWEBIssENmCQh9n+2vCQxBiAMgeEgfmEwRhYjKjUiG0CiZuTcR1wSBgAVr/mXBRfxGwAAAABJRU5ErkJggg==","F"],["data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAqUlEQVR42mNgQAPMzIL/QZhYcZwAWTFJGtFtJMtmEJ7R24yCiTII3VZcGKfmHwc9/n+YaAbG13RU/mvIGoHxy+QoOAaJYxgC1rzSEoxPaqqBFeEzAMUQEAMkANJ8yU4L7kx0A0A0shzcEHQBZEXY2LQ1AB2ja8AmDw+HKdLqRBsAUosSE6QYAFK3Ql4Ne1SCJJExzACYJhjGm5hCZYzhGGYAuhhFyRldPQAOqCDQC1NNWgAAAABJRU5ErkJggg==","F"]],"butterfly":[["data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAyElEQVR42mNgQAKsLEL/QZiBHADS+Pf///+/d7qRZwhI07ubr8GGoBtAtMuQFaLTRGlEVoxNDKs4iOEctwaOYZJ/LsbCMbJr0NXCBb9WrgRjmGZsNLI6ggYgaybKAHSn3QhRh2NsauAG4PLb930BGLZj1YwcujrSbmAMYn+aYYxiAEwOJo+hGd30+xnmKAaYOE3D7QL0ANK37YR4Y4UTGIPYIDGMACRkACgAbyboETYAZgjImSCMnHCQ2S4+s8EYZ/ImlGmwyQMACvRM4tw8JNQAAAAASUVORK5CYII=","F"],["data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAA4UlEQVR42mNgAAImJv7/IMxAJEBRD2LsvPsBjGGCMuLGGIbBxEBqjj779P/Km68Q9SDi+99/YIzLEHEhVbhmmFoQxjAA3RBkp4JokK0EDQDh5deegCVtzSv/65lE/cemGcUAkCQyhhkAcjoM4zQA2XkwDPLGpEWn4JpBBqJbghJrVDEApAgZoxuAjjHSDUjAJaAfBcMM8IqaiiKONdEhxwbIieguwBp4uDRjMwAmjtUQbFGJbACITTAQZ++6h2EALCWiGwBSi9UbIAkYRlYAYi/efw/sFRCNM+fCbMSmAJccAHXK/ztH10E8AAAAAElFTkSuQmCC","F"]],"bee":[["data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAA4UlEQVR42mNgQANsrML/YZgUObiCJ2+/g/H0S09RFCLLgTBWQ0CCcx88heOk7gNwG0GakOVwGhDQvA/DgGUP3qFoxmkAsiEgTTADQDQyxqkZPaBwYbyav79cA8a/TwX9/3Yh/r+trCgY/76WB+aHGKvi9v+vpwfBitAxzBBkPoohMJvRDUDmIxsCY4MNQbZZ2aUFxQBkProBcK+ACJgiZDY6H2bA95X+/+V5RMGYJANgms4Um6AaAAsDbIEHw8iarlSZo2pGDkhsmkEa0A3AmwpBipExSAOyrXgTEqGUiE09ANV7o+/IOj1HAAAAAElFTkSuQmCC","L"],["data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABDUlEQVR42mNgQAPMTHz/QZgBC4DJ4ZJn4GeX+r9h7yMwRlcE4r///AuOsRoCM6Bo0VkUQ2Car7z5CsYH7n9GGCAtLAfngAwAsUEGgDDMuSDNJx9+g+MZh54hDAAxVMQU4YphbHQDQJpgGMP5yAEDomGuAuENl978Rw48nAEIk/x53u0/yCsgOlJH6v+0lnCwq5BdiVUzSAM2nGooDjYIZiCIRjEExKk7/fo/siHIfGwGgMRQAhHZ+TAbkA0AYXQDYDFGtAFv59uADYDRKAb8vByB1f/PJpmDFYIwiA2KHRiNEQ4gCXSM7LpaS1mwQZM8VHDHBDqGOROdzYAPICckWNxjOJmQAcipEpmNTT0ApvBgwvrUUc4AAAAASUVORK5CYII=","L"]],"squirrel":[["data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABHElEQVR42mNgQAJMjDz/v1au/P991fH/IDYDKQCk4XvXxv/////7/yV9PoYhIDYyxtQ8+TBY89ddVv9/nPcFuwSmEERfa3cE4+0J2mCMYgjMdpAmmAtAYlebkiB0TyiKZpyGqObqgA0B0SAFMAPQNX67Mg+M4QbAbIEpALkChGG2oGsGiWWGJqEagK4AJobLAFTb56b+txEXgzsNhg9lGcANydVSwO33VXkBYA05EmYoBsz0V0bRBDMEazTCsKelJxhHashhBJ4IKwFDehxkwBLINsuzc8INI2gALBxANAiDNGNzAShssCZ1kODLHZXwMED3Bl4XwAwAOR8UKyCMbgDIRS3Warg1gzSAsJW2GdzvyBhrRsKV27BhbPoAouSDylRX+4YAAAAASUVORK5CYII=","L"],["data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABFUlEQVR42mNgIAqw/cfEOBViatyeoI2BsRjC9j9RQx7FFphCbAZgMYTt/3QPRayKkPnvry6DYwwDsNniISv6v9RYEcUAe0mx/5+3tSIbwAY3Fd0mEFtPRBBFHMRf35yGagAbsxAYwxTC+DANMFcgnI7mfJDEp3vb/yvxC4MxzAV31xaDNSO7Akc0sv23nmr7X8jG9L/BPDcUzTBvIIcF1miMNg7676sRBDYEZBgosJADFNkQDC+ANO/Kuva/zH8q2BBpPnVwtHbZKcMNwmsASANIIwyDAhAUFsiuABnQZKKM2wsgQ2AYFAagNIDuBZABIFdgNQAkcXZmMRzjCgOsmkG2gRQszksAY5iBMIyaT4jKrsRlYQArnGwcdhNmSQAAAABJRU5ErkJggg==","L"]],"rabbit":[["data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAvUlEQVR42mNgQAKszML/YZiBVADS9PvTbTgm2RCQhm9t0+AYZghJrgIpWhDiiGIAya4CKVoV5/n/x7kV/18vbQZrRHcV0eEAw6l6Gv/fNzSCDcFpAEwzsiEwNsg1BMOCGAOIjkaYf2GYKANwhQEoIKst9IlPFyCFuwuTwfh0VTTcBaCYIckVX0/Mh7sCxAYZ8O3VeeLDAuQCdAMudecR74pdxSFgxSBNJHsBZDs4bwCdDMKgsCApc6FnInyaAYV2PG5tmh26AAAAAElFTkSuQmCC","L"],["data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAvklEQVR42mNgwALYmPn/EyPGgEvz2wkz/yNrALG/LlrynyhDQIq+TZ/0/3heCFgDCIPYIDGiDQC5AN0Aol0AM+T7zS0omCLNJBlCkQHImvGx8Rrw58cDcIiD6I+5Xf+/nTwIZoMClmgDcGGiw+DV5qVY8a5Uf8IueHdyJVbbf767BDbg9ebJuA0BSTyZW4HVEJDGvWFW/09XRRM2IExZAawBpvnOnBawGIgm6AWQImRDQH6HaSZoAMwQfBhdPQDVGFLKi06r0wAAAABJRU5ErkJggg==","F"]],"hedgehog":[["data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAA2klEQVR42mNgwAkY/6NiogFEQ6G5xH9DUYH/LgqSYDaRBjH+j9SRAmtAxlX2smCMMAiHZpCipQnGYJtBGGYAjL8xwwOXIYz/Uw3F4Ypf7qgEY5hGZD5OA9A148I4DEE1gJNdCIxhmkDyMD4WAxhR/IlsG7JGZBeAYgbkZaghkJDH5nxY1GHzBk4DPoVGo9C4wgGkB24AsvPb5dzAmkE0sqbDNa5gjBw7KOEAM+BcsxtW74D8jWwARixgC0RczsdiAMIQUGrDh3FoRhhSZKEDxui5EVWciNxIrDgAt7N2+eUvVzMAAAAASUVORK5CYII=","L"],["data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABBElEQVR42mNgwAIYGbj+o2MGYgFI8SQflf9WUiIoNFEGwTRjwwHqwv8NRQVwGwKSANkGsxGk4Wt32/8GFyWwGIyN1RCYzTBDQJpB+EtJ5f/Fun7/36RWgQ2AuQbDEBBHVYD//7eDnf+/npgPZoPwHvskOB/EBhkKMwTDAJBCXPhKYzhYA7IBKK6AGYBuEB+HOJwN0gAzAOTNXAtZiAEwTZ86ysACPlpyYAwzACSObAhyIKMYAMOw+MblFZAhMIOwGlDjEwTG2Ax41BUFD2CMMABJ4gtImAtAmuHOR44FkK0gBbg0wjCG7eiG7O7JxcAwzTAv4E3OsDBAzonoYgQzFLoifBoBvfCUfeMccKMAAAAASUVORK5CYII=","L"]],"turtle":[["data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAz0lEQVR42mNgoDL4j4ZJ07zqTv7/1r0+cEyKISiakQExhmDVzMkugGwAXq+hOBumGdkAFROF/94Fmv8dMnTAGN2Q/9JKUmDNMBoGQGyYZhAGycP4yIb8rzkWhuIKGBYSlABrgNEgjSAahDFcAZPwrjSGY5BGQx+IATBDYAaCMNbwADlTw0cLbgCIj2wIsmFYDQBJgAxANgTmEmSMzQXgEAaFPsypyBjdBVhtB9mK5LT/yFGMRwynAQw4FIPVFK23x+4KNEF4zKCLk5RP8GkAAAZFFdXkrG6IAAAAAElFTkSuQmCC","L"],["data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAxUlEQVR42mNgGD6AjVnwPwxjE0OXw9C87FH7/9a9PmAMUyyrJfQ/MVMNjkF8DEOQNf/7/x+sAMRWs5H+HxKjDNYEwyBD7F1lUQ2BaUC2GcR20RQFGyAkLwKmYYbBaLghyAYgY5ABPMJCcE0wjSADQeIYrrBotEHBqjIScENgmmAYJI41LGBY09cUzg60UsLAWGMEXSN6uMCwb48TihyGASrBrmCJxPWeGAphakBexDAAmzeQAxXZELyJCt1FOG0jN3lTHQAABUjbVX1xebQAAAAASUVORK5CYII=","L"]],"snail":[["data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABSUlEQVR42mNgYOT+D8bIAJsYTgBU+GJfI7KG/69WV5JgALqNJNmObADQZhB9dW4qqgEwA5ExNgN+vNsKxjsyHVBcM8tLHWz4wkiT/6vjjcAY1RAg5+ujdf/fn+yEY5hNIE1H8x3hhpTqy/yvtZQFiyMMgQairYTQ/6vdnvAABCk6XOMK1gDCIAOUOTj/6/Fwgw0CGwo2BGoADIMMABnW4yADxyDNIA0wDDIIYQDUFdFyImBbn6xORjEApBhEg2yF2Q4SA9EoBsD8i8uANFURMBtGoxgAsh3k3zf7SuAGgDBMMbIBIAwKE5A8hgGgNAAKA5BLQApgGkDyIBth2FtWGDUqQYpBBoBsB7kCFJggL8EMAWlAxpiJCShQZKEDTkSXp0aDDQAZ1O+m8b83yAbuEhhGSWzIhoAU13oZwA0CYZC3QHxsGKshpGIA771Xw4k8v1wAAAAASUVORK5CYII=","L"],["data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAA/klEQVR42mNgAAImRt7/IMwABeh8vACk8OujdXANIPrnh6P/ny3LI84QkKLTVdEoBjzfnEe8C9ANAeFdxSFYvYTTa8ia0A0A0WfKrMF4oaf6/ynm8piGwFwA8vuXC1NQDINpRMcohoA4II3I+OXMuP8hCoIYGlcH6YDpNhNZiCGwWBDiEIZrBrFBAYlsgKUIHxxjGADS9LW7DW4AiA2KRpgBIMUgjSD/g2gQH8MAdAwzAKYYpwHwWEj1h2BgAIL8j80AGEbRjC0QQQaAMMhAZBth2FFSgLhYQDYEGWNNB/gMAHkLlE5AGMbGaoh1sTocYwtYZPz+ZCd2Q0jBID0A40yP0UTdbWsAAAAASUVORK5CYII=","L"]],"fox":[["data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABDUlEQVR42mNggAJmJr7/IMyABcDEcaoBCVorKv93UVLFUADif52+8f9F50ycasCKQBLSvIJgRTCbYJp/PfQB4+9dG+HyOA0A4Q+5qmD8zkf1/xefKf9/Hbf4/2uDA5hN0ACYZhD+VGfwX2eSDVgjCCO7EGs4IGtGxneDZcAGgdi4AhqvAciYKNuJ4WMY8PXE/P+/v1wDYxAfRIP8jMwHYZA6rOkBHm1YDELXiCyP1TuTHIxR8DwrFbDiZwmG/3++PUXYAFCog2yEYRD/rK8qGMPCAasBIAGYIpgtIAziq/EJ/b9iL4c7MLElpu83t8DZMANgLsFqO0gRCINSGyzFwdggg5HzCM7EhA9j0wMASEJ+1yNs1L0AAAAASUVORK5CYII=","F"],["data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAz0lEQVR42mNgQID/UIwO/uORQyji4BD+by4vh64QLIZFHLsBaIaA2TBxol3wtEwdjmfqS8ENIWgAumZkTJQXcGnGYsh/nJr//v8Pdi4uPsgQkLfQDfn/+9NtMIYFGEwDjA+TW2mmBhYH0RiGdM7ZB1aI7Gxkg0E2I8thNQSEr529+F+eVxBMw2IHpBhmO14DdETFkQPqvxDUCyAMkgNhXAaAAwhkM8zZ6N5BxxgGFDRuIFszRkDiMwSkGVtUohgCwyCFIAwLRBgmmCqJwHAAAAisbZC617xyAAAAAElFTkSuQmCC","L"]],"frog":[["data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAx0lEQVR42mNgwAMEBZT+gzADqQCm8f//f2BMkkHIGn+digBjGJ+VVfg/SQa8arEDY2SX0NYLICfCcBp3FlhT4nrP/8jiOL0Bklj2qB2MV93JhytWCjD8j00OqwF2nU5wjVPPx6BgmDhMDXYDymz+6yTogDG6ASAxkGvwGvBt+iQwhmkSNJMFYxgfJo9hAEgAFFjotuLCoYu9UQ2higEgQb/ZTkRpxjAAZggokEAuAWFQYCFjmDgsWnGmBZgG9MSDLE5UaiRWHACwhU1YE4k0bQAAAABJRU5ErkJggg==","F"],["data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAxElEQVR42mNgwAE42ST+f9lxBoxBbAZSAEjDcuOk/58qJ4MxiE20ITCbQRr/XA4C46/TNxLvErAB6fPB+Ps0azCG8QkaAFKAjJHDABnj1Dz1fAwcg/gHPUrAGJscVgOs+gL+f/v+HUMDCMPE3RcG4TYAJonNAJg4VgNgGr52LQRjmAZkzdjk8RqAbCuMj9UAEMOw0gvDyYQwSA/YEJgBpBgCU4/hCmIMwasZxC7cFgzGMDEYhomjq8dIgciShMTxJmdixQGcP4Fv7wgeXwAAAABJRU5ErkJggg==","F"]],"kitten":[["data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAA8UlEQVR42mNggAJWZsH/MMyABRCSByu4N8n2//N5jhiKQHyQODY5FEVrohL/X4+J/T/XU/E/so3rA1XA4iB5ggZ02+iCbco1kEGhQeIEDZjqKA13KroBIAySx2sATCE+jNUAkGCVqTQYwxSha9oTrwx2DQhjGAISsBGXRtHw9dU1OCY6FkAuQNZYrOOEwgfJ400PIMH9K3fjxDCNIG+sSjNHNQQmGaosBsYgLyFjUFqAuUCBXwIsBjcAn5/xhQtWzcgKQCEPwvjUgA1ojk0DCwSrm8Bp5MCCGYAsDwsTlMCDScAMQA9cXPIY2RVbFOGSBwDeeo7VqIv6/wAAAABJRU5ErkJggg==","F"],["data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABFUlEQVR42mNgoBZgZRL4D8LEiGOIgTivNyb/bzHT+Q+ThOG3R3L/T3IwRhH7/eUaGMMNATGORST+n2Kl9f9ilvX/T9sT/h9LNAHTa2xc/i/ysMDQ/PDAUkwDQBrQDQBhZBd8uTAFjFG8AWLAFOPCMO/B+Fg1oxuEjQ8yCMQGeRdsCIgAORsWKDA/IvNB8jANIANA3kNxwYcra+GaXi9t/h8jo45i0NMz68EaQBpBBsC8gxKNR1YsQNEEwyBxkPzdCb7wAMaWXuCGoGOQ00GaQOkEIwDRDQBJorsAW4zgNOBaiSOKITANIPEaS1swDcJYDUA2BOZ8ZBtBGGQICOM1YMvECXBFt9av+3+6KhojfxCVK4nVAAC2Haz1Gj4TowAAAABJRU5ErkJggg==","F"]]};
 const pick=a=>a[Math.random()*a.length|0];
 /* a sprite: species, which variant, scale, which way it should look ('r' or 'l'; front-facing ones never flip) */
@@ -4294,6 +4347,60 @@ function rnProof(){ const S=R; if(!S||!S.gate) return null; const g=S.gate, out=
   out.ok=out.up.hitMine&&out.down.hitMine&&out.apexHitsHigh&&!out.apexHitsLow&&!out.standHitsHigh&&!out.standHitsLow&&!out.slideHitsHigh&&out.inside.hi&&out.inside.lo&&out.inside.card&&out.cardClear;
   return out;
 }
+
+/* ---------- TIDY-UP (Nov 26): 🔊 Les mots = every word with a recording, and the search box on home ---------- */
+const dcNorm=t=>String(t).toLowerCase().replace(/œ/g,'oe').replace(/æ/g,'ae').normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[’'`]/g,"'").replace(/[^a-z0-9' -]/g,' ').replace(/\s+/g,' ').trim();
+const DC_HIDE=new Set(['salle','sissi','e','o','u','i']);   /* aliases (same-sound takes) and bare letter names */
+const DC_NUM=new Set([...Array(61)].map((_,n)=>NUMW(n)));
+const DICO=(()=>{ const m=new Map();
+  const add=(k,teach)=>{ k=String(k).trim(); if(!k||DC_HIDE.has(k)) return; const n=dcNorm(k); if(!n) return; const old=m.get(n); if(old&&(old.teach||!teach)) return;
+    const words=n.split(' ').length; m.set(n,{k,n,teach,num:DC_NUM.has(k),phrase:words>=3,
+      label:words>=4?k.charAt(0).toUpperCase()+k.slice(1):k}) };
+  Object.keys(TEACH).forEach(k=>add(k,true)); Object.keys(GROK).forEach(k=>add(k,false));
+  return [...m.values()].sort((a,b)=>a.n.localeCompare(b.n,'fr')) })();
+function dcFind(q,f){ q=dcNorm(q); let L=DICO;
+  if(f==='teach') L=L.filter(x=>x.teach); else if(f==='word') L=L.filter(x=>!x.phrase&&!x.num); else if(f==='phrase') L=L.filter(x=>x.phrase); else if(f==='num') L=L.filter(x=>x.num);
+  if(!q) return L;
+  const nums=(q.match(/\d+/g)||[]).map(Number).filter(n=>n<=60).map(n=>dcNorm(NUMW(n)));
+  const hit=x=>x.n.includes(q)||nums.includes(x.n);
+  const rank=x=>nums.includes(x.n)||x.n===q?0:x.n.startsWith(q)?1:(' '+x.n).includes(' '+q)?2:3;
+  return L.filter(hit).map((x,i)=>[rank(x),i,x]).sort((a,b)=>a[0]-b[0]||a[1]-b[1]).map(r=>r[2]) }
+function dcBtn(x){ const b=document.createElement('button'); b.className='dcw'+(x.teach?' t':'')+(x.label.length>26?' long':''); b.lang='fr';
+  b.innerHTML=`<span class="src" aria-hidden="true">${x.teach?'🎙️':'🔊'}</span><span>${esc(x.label)}</span>`;
+  b.setAttribute('aria-label',x.label+(x.teach?' (the teacher)':''));
+  b.onclick=()=>{ say(x.k); $$('.dcw.on').forEach(e=>e.classList.remove('on')); b.classList.add('on') }; return b }
+let dcF='all';
+function dcPaint(){ const q=$('#dcQ').value, L=dcFind(q,dcF), box=$('#dcList'); box.innerHTML=''; $('#dcX').hidden=!q;
+  L.forEach(x=>box.appendChild(dcBtn(x)));
+  $('#dcCount').textContent=L.length?`${L.length} of ${DICO.length} words and sentences`:'Nothing found. Only words from the class material that have a recording are listed here.' }
+$('#dcQ').addEventListener('input',dcPaint); $('#dcX').onclick=()=>{ $('#dcQ').value=''; dcPaint(); $('#dcQ').focus() };
+$$('[data-dcf]').forEach(b=>b.onclick=()=>{ dcF=b.dataset.dcf; $$('[data-dcf]').forEach(x=>x.setAttribute('aria-pressed',x===b)); dcPaint() });
+inits.dico=dcPaint; inits.parents=()=>{};
+/* home search: activities (name + English hint) and words, in one box */
+const FIND_TILES=(()=>{ const seen=new Set(), out=[];
+  $$('.catscreen .tile').forEach(t=>{ const k=t.dataset.go+':'+(t.dataset.mode||'')+':'+(t.dataset.tr||''); if(seen.has(k)) return; seen.add(k);
+    const door=t.closest('.catscreen').querySelector('h2'); const b=t.querySelector('b'), h=t.querySelector('.hint');
+    out.push({t,where:door?door.textContent:'',n:dcNorm((b?b.textContent:'')+' '+(h?h.textContent:'')+' '+(t.getAttribute('aria-label')||''))}) });
+  return out })();
+function findPaint(){ const raw=$('#findQ').value, q=dcNorm(raw), res=$('#findRes'), on=q.length>0;
+  $('#findX').hidden=!raw; res.hidden=!on; $('#home .doors').hidden=on; $('#home .plinks').hidden=on; $('#week').hidden=on||!$('#weekGrid').children.length;
+  if(!on) return; res.innerHTML='';
+  const T=FIND_TILES.filter(x=>x.n.includes(q)).slice(0,12);
+  const h1=document.createElement('h3'); h1.lang='en'; h1.textContent='🎮 Games and lessons'; res.appendChild(h1);
+  if(T.length){ const g=document.createElement('div'); g.className='grid';
+    T.forEach(x=>{ const c=x.t.cloneNode(true); c.classList.remove('new'); c.removeAttribute('data-new'); const tg=c.querySelector('.new-tag'); if(tg) tg.remove(); c.hidden=false;
+      const w=document.createElement('span'); w.className='hint'; w.textContent=x.where; c.appendChild(w);
+      c.onclick=()=>{ if(c.dataset.mode) MODE[c.dataset.go]=c.dataset.mode; if(c.dataset.tr){ trCur=c.dataset.tr } go(c.dataset.go) }; g.appendChild(c) });
+    res.appendChild(g) }
+  else{ const p=document.createElement('p'); p.className='none'; p.lang='en'; p.textContent='No game with that name.'; res.appendChild(p) }
+  const W=dcFind(raw,'all');
+  const h2=document.createElement('h3'); h2.lang='en'; h2.textContent='🔊 Words (tap to hear)'; res.appendChild(h2);
+  if(W.length){ const box=document.createElement('div'); box.className='dclist'; W.slice(0,24).forEach(x=>box.appendChild(dcBtn(x)));
+    if(W.length>24){ const m=document.createElement('button'); m.className='tab'; m.lang='en'; m.textContent=`All ${W.length} →`; m.onclick=()=>{ $('#dcQ').value=raw; dcF='all'; $$('[data-dcf]').forEach(x=>x.setAttribute('aria-pressed',x.dataset.dcf==='all')); go('dico') }; box.appendChild(m) }
+    res.appendChild(box) }
+  else{ const p=document.createElement('p'); p.className='none'; p.lang='en'; p.textContent='No recorded word matches.'; res.appendChild(p) } }
+$('#findQ').addEventListener('input',findPaint); $('#findX').onclick=()=>{ $('#findQ').value=''; findPaint() };
+inits.home=()=>{ if($('#findQ').value) findPaint() };
 
 /* start */
 paintDone();
