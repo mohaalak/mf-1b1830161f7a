@@ -3,7 +3,7 @@
    - The page: network first (so updates show), cached copy when offline.
    - The class videos (videos/*.mp4): saved on install, served from the cache,
      with Range support (iPhone/iPad Safari asks for videos in byte ranges). */
-const VERSION = "91b9e5177c27";
+const VERSION = "2fc7428e798b";
 const FILES = ["./", "./videos/mb-nov.mp4", "./videos/mb-ou.mp4"];
 const CACHE = "mf-" + VERSION;
 
